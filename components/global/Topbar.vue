@@ -56,7 +56,7 @@
 					/**
 					 * uncomment this if using an api integration
 					 */
-					// this.user = this.$auth.user
+					this.user = this.$auth.user
 				}
 			}
 		},
@@ -78,26 +78,20 @@
 				/**
 				 * uncomment this if using an api integration
 				 */
-				// await this.$auth.logout().then(res => {
+				await this.$auth.logout().then(res => {
 					setTimeout( () => {
-						/**
-						 * remove this if using an api integration
-						 * check the middleware [authenticator]
-						 */
-						localStorage.removeItem('auth')
-
 						this.user_logout = true
 						this.toggleModalStatus({ type: 'loader', status: false })
 						window.location.assign('/')
 					}, 500)
-				// })
+				})
 			}
 		},
 		mounted () {
 			/**
 			 * uncomment this if using an api integration
 			 */
-			// this.user = this.$auth.user
+			this.user = this.$auth.user
 		}
 	}
 </script>

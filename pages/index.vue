@@ -53,27 +53,16 @@
 						/**
 						 * uncomment this if using an api integration
 						 */
-						// this.$auth.loginWith('local', { data: this.form }).then(res => {
-						//     this.$router.push('/dashboard')
-						// }).catch(err => {
-						//     this.toggleModalStatus({ type: 'catcher', status: true, item: { errors: err.response.data.errors } })
-						// }).then(() => {
+						this.$auth.loginWith('local', { data: this.form }).then(res => {
+						    this.$router.push('/dashboard')
+						}).catch(err => {
+						    this.toggleModalStatus({ type: 'catcher', status: true, item: { errors: err.response.data.errors } })
+						}).then(() => {
 							setTimeout( () => {
-								/**
-								 * remove this if using an api integration
-								 * check the middleware [authenticator]
-								 */
-								localStorage.setItem('auth', 1)
 
 								this.toggleModalStatus({ type: 'loader', status: false })
-
-								/**
-								 * remove this if using an api integration
-								 * check the middleware [authenticator]
-								 */
-								this.$router.push('/dashboard')
 							}, 500)
-						// })
+						})
 					}
 					this.$nextTick(() => {
 						this.$refs.form.reset()

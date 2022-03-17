@@ -63,24 +63,7 @@
 		 * remove this if using an api integration
 		 * check the middleware [authenticator]
 		 */
-		watch: {
-			$route (to, from) {
-				this.checker()
-			}
-		},
 		methods: {
-			/**
-			 * remove this if using an api integration
-			 * check the middleware [authenticator]
-			 */
-			checker () {
-				let auth = localStorage.getItem('auth')
-				if (auth) {
-					this.$store.commit('global/settings/userAuthentication', { status: (auth) ? true : false })
-				} else {
-					this.$router.push('/')
-				}
-			},
 			windowScroll () {
 				let selector = document.querySelector('.table')
 				if (selector) {
@@ -96,18 +79,18 @@
 		/**
 		 * uncomment this if using an api integration
 		 */
-		// async mounted () {
-		// 	await this.validateToken('/')
-		// 	window.addEventListener('scroll', this.windowScroll)
-		// },
+		async mounted () {
+			await this.validateToken('/')
+			window.addEventListener('scroll', this.windowScroll)
+		},
 		/**
 		 * remove this if using an api integration
 		 * check the middleware [authenticator]
 		 */
-		mounted () {
-			window.addEventListener('scroll', this.windowScroll)
-			this.checker()
-		},
+		// mounted () {
+		// 	window.addEventListener('scroll', this.windowScroll)
+		// 	this.checker()
+		// },
 		destroyed () {
 			window.removeEventListener('scroll', this.windowScroll)
 		},
