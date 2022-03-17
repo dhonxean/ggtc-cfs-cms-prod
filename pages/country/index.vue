@@ -20,15 +20,26 @@
 						<div class="content_top">
 							<h2>Filter</h2>
 						</div>
-						<form class="content_middle form">
-							<div :class="[ 'group bordered', (form.sample.length > 0) ? 'filled' : '' ]">
-								<label for="sample">Input</label>
-								<input type="text" class="input search" name="sample" autocomplete="off" v-model="form.sample">
+						<form class="content_middle form" @submit.prevent="fetchData()">
+							<div :class="[ 'group bordered', (form.keyword.length > 0) ? 'filled' : '' ]">
+								<label for="sample">Search</label>
+								<input type="text" class="input search" name="keyword" autocomplete="off" v-model="form.keyword">
 							</div>
-							<div :class="[ 'group select bordered', (form.sample_v2.length > 0) ? 'filled' : '' ]">
-								<label for="sample_v2">Select</label>
-								<select class="input" name="sample_v2" v-model="form.sample_v2">
-									<option value="test" v-for="n in 5">Test</option>
+							<div :class="[ 'group select bordered', (form.sort_by.length > 0) ? 'filled' : '' ]">
+								<label for="sample_v2">Sort By</label>
+								<select class="input" name="sort_by" v-model="form.sort_by">
+									<option value="iso2">Code</option>
+									<option value="currency">Currency</option>
+									<option value="name">Name</option>
+									<option value="publish">Publish</option>
+								</select>
+								<div class="dd"></div>
+							</div>
+							<div :class="[ 'group select bordered', (form.order_type.length > 0) ? 'filled' : '' ]">
+								<label for="sample_v2">Order By</label>
+								<select class="input" name="order_type" v-model="form.order_type">
+									<option value="asc">Ascending</option>
+									<option value="desc">Descending</option>
 								</select>
 								<div class="dd"></div>
 							</div>
@@ -45,29 +56,29 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="stick sort">
-						<div class="label pointer asc">
-							Full Name
-						</div>
-					</th>
-					<th class="stick sort">
-						<div class="label pointer desc">
-							Gender
-						</div>
-					</th>
-					<th class="stick sort">
+					<th class="stick">
 						<div class="label pointer">
-							Birthday
+							Flag
 						</div>
 					</th>
 					<th class="stick sort">
-						<div class="label pointer">
-							Contact Number
+						<div :class="`label pointer ${sort.name ? 'asc' : 'desc'}`" @click="sort_table('name')">
+							Name
 						</div>
 					</th>
 					<th class="stick sort">
-						<div class="label pointer">
-							Email Address
+						<div :class="`label pointer ${sort.iso2 ? 'asc' : 'desc'}`" @click="sort_table('iso2')">
+							Code
+						</div>
+					</th>
+					<th class="stick sort">
+						<div :class="`label pointer ${sort.currency ? 'asc' : 'desc'}`" @click="sort_table('currency')">
+							Currency
+						</div>
+					</th>
+					<th class="stick sort">
+						<div :class="`label pointer ${sort.publish ? 'asc' : 'desc'}`" @click="sort_table('publish')">
+							Publish
 						</div>
 					</th>
 					<th class="stick">
@@ -77,24 +88,30 @@
 					</th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr v-for="(data, key) in 20" :key="key">
+			<tbody v-if="records.data.length > 0">
+				<tr v-for="(data, key) in records.data" :key="key">
 					<td>
-						<div class="name pointer">
-							Juan Dela Cruz
-						</div>
+						{{ data.flag }}
 					</td>
-					<td>Male</td>
-					<td>{{ $moment().format('MMM DD, YYYY') }}</td>
-					<td>09012345678</td>
-					<td>juandelacruz@gmail.com</td>
+					<td>
+						<nuxt-link :to="`/country/${data.id}/update`" class="name pointer">
+							{{ data.name }}
+						</nuxt-link>
+					</td>
+					<td>{{ data.iso2 }}</td>
+					<td>{{ data.currency }}</td>
+					<td :class="`bg ${data.publish ? 'primary' : 'cancel' } upper`">
+						<span>
+							{{ data.publish ? 'Yes' : 'No' }}
+						</span>
+					</td>
 					<td class="buttons" width="210px">
 						<div class="wrapper">
-							<div class="item info pointer">
+							<nuxt-link :to="`/country/${data.id}/update`" class="item info pointer">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" class="icon"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
 								<span>Edit</span>
-							</div>
-							<div class="item ml cancel pointer">
+							</nuxt-link>
+							<div class="item ml cancel pointer" @click="toggleModalStatus({ type: 'delete_confirmation', status: true, item: { api: `admin/country/delete/${data.id}`, item_type: 'country' } })">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" class="icon"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
 								<span>Delete</span>
 							</div>
@@ -102,7 +119,16 @@
 					</td>
 				</tr>
 			</tbody>
+			<tbody class="no_results" v-else>
+				<tr>
+					<td colspan="6">No Result(s) Found.</td>
+				</tr>
+			</tbody>
 		</table>
+
+		<div class="bottom_box">
+			<pagination :api_route="records.path" :current="records.current_page" :last="records.last_page" />
+		</div>
 	</div>
 </template>
 
@@ -112,16 +138,44 @@
 			loaded: false,
 			filter: false,
 			form: {
-				sample: '',
-				sample_v2: ''
+				keyword: '',
+				sort_by: 'name',
+				order_type: 'asc',
 			},
+			sort: {
+				name: true, //true = asc | false = desc
+				iso2: true,
+				currency: true,
+				publish: true,
+			},
+			has_search: true,
 			records: [],
 		}),
 		methods: {
-
+			sort_table (sort_name){
+				const me = this
+				me.sort[sort_name] = !me.sort[sort_name]
+				me.form.sort_by = sort_name
+				me.form.order_type = me.sort[sort_name] ? 'asc' : 'desc'
+				me.fetchData()
+			},
+			fetchData() {
+				const me = this
+				me.toggleModalStatus({ type: 'loader', status: true })
+				me.$axios.$post('admin/country/get-country', me.form).then(({ res }) => {
+					me.records = res
+				}).catch(({ response: { data: { errors } } }) => {
+					me.toggleModalStatus({ type: 'catcher', status: true, item: { errors: errors } })
+				}).then(() => {
+					setTimeout( () => {
+						me.toggleModalStatus({ type: 'loader', status: false })
+					}, 500)
+				})
+			}
 		},
 		mounted () {
 			const me = this
+			console.log(me.records)
 			me.toggleModalStatus({ type: 'loader', status: true })
 			setTimeout( () => {
 				me.toggleModalStatus({ type: 'loader', status: false })

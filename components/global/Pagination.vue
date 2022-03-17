@@ -45,7 +45,6 @@
 			getPage (event = null, current = null, last = null, type = null) {
 				const me = this
 				let call_api = true
-
 				if (!event) {
 					me.page_number = (type == 'prev') ? me.page_number - 1 : me.page_number + 1
 					if (me.page_number > me.last) {
