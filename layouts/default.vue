@@ -113,7 +113,7 @@
 		},
 		head () {
 			return {
-				title: 'Demo | Admin Template'
+				title: 'CFS | Admin'
 			}
 		}
 	}

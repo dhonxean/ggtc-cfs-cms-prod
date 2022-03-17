@@ -15,7 +15,7 @@ export default {
 	/*
 	** Customize the progress-bar color*/
 	loading: {
-		color: '#FF9000',
+		color: '#0084B0',
 		throttle: 0,
 		height: '4px'
 	},
@@ -61,9 +61,9 @@ export default {
 					property: 'user'
 				},
 				endpoints: {
-					login: { url: `${process.env.API_URL}users/login`, method: 'post' },
-					logout: { url: `${process.env.API_URL}users/logout`, method: 'post' },
-					user: { url: `${process.env.API_URL}users/user`, method: 'get' }
+					login: { url: `${process.env.API_URL}admin/login`, method: 'post' },
+					logout: { url: `${process.env.API_URL}admin/logout`, method: 'post' },
+					user: { url: `${process.env.API_URL}admin/info`, method: 'get' }
 				}
 			}
 		}
