@@ -29,18 +29,40 @@ Vue.mixin({
 				}
 			}
 		},
-		updateWysiwyg (editor, type, update = false) {
+		updateWysiwyg (editor, type, update = false, custom = false, custom_type = null) {
+			const me = this
 			if (update) {
-				this.form_data[type] = document.querySelector(`.editor.${type} .ql-editor`).innerHTML
+				if (custom) {
+
+				}
+				else{
+					me.form_data[type] = document.querySelector(`.editor.${type} .ql-editor`).innerHTML
+					me.validation[type] = (me.form_data[type].length <= 0) ? true : false
+				}
 			} else {
-				this.form_data[type] = editor.html
+				if (custom) {
+					me.form_data[custom_type][type].content = editor.html
+					me.form_data[custom_type][type].validation = (me.form_data[custom_type][type].content.length <= 0) ? true : false
+				}
+				else {
+					me.form_data[type] = editor.html
+					me.validation[type] = (me.form_data[type].length <= 0) ? true : false
+				}
 			}
-			this.wysiwygErrorBag(this, type)
 		},
-		validateWysiwyg (page, wysiwygs) {
-			wysiwygs.forEach((wysiwyg, key) => {
-				this.wysiwygErrorBag(page, wysiwyg)
-			})
+		validateWysiwyg (page, wysiwygs, custom = false) {
+			if (custom) {
+				wysiwygs.forEach((wysiwyg, key) => {
+					page.form_data[wysiwyg].forEach((item, index) => {
+						item.validation = (item.content.length <= 0) ? true : false
+					})
+				})
+			}
+			else {
+				wysiwygs.forEach((wysiwyg, key) => {
+					page.validation[wysiwyg] = (page.form_data[wysiwyg].length <= 0) ? true : false
+				})
+			}
 		},
 		wysiwygErrorBag (page, type) {
 			let text = document.querySelector(`.editor.${type} .ql-editor`).textContent

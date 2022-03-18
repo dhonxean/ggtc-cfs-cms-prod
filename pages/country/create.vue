@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
 	<div id="dashboard" v-if="loaded">
 
 		<div class="actions">
@@ -28,90 +28,232 @@
 						</div>
 					</div>
 					<div class="bottom_box">
-						<ValidationProvider tag="div" class="group bordered" name="title" :rules="{ required: true }" v-slot="{ errors }">
-							<label for="title">Title *</label>
-							<input type="text" class="input" name="title" autocomplete="off" placeholder="Enter title" v-model="form_data.title">
-							<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-						</ValidationProvider>
-						<ValidationProvider tag="div" class="group select bordered" name="category" :rules="{ required: true }" v-slot="{ errors }">
-							<label for="category_id">Category *</label>
-							<select class="input" name="category_id" v-model="form_data.category_id">
-								<option value="" disabled selected>Select a category</option>
-								<option value="1">Category 1</option>
-							</select>
-							<div class="dd"></div>
-							<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-						</ValidationProvider>
-						<div class="group_inline three">
-							<ValidationProvider tag="div" class="group bordered" name="first name" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="first_name">First Name *</label>
-								<input type="text" class="input" name="first_name" autocomplete="off" placeholder="Enter first name" v-model="form_data.first_name">
+						<div class="group_inline two">
+							<ValidationProvider tag="div" class="group bordered" name="name" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="name">Name *</label>
+								<input type="text" class="input" name="name" autocomplete="off" placeholder="Enter country name" v-model="form_data.name">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
 							<div class="group bordered">
-								<label for="middle_name">Middle Name</label>
-								<input type="text" class="input" name="middle_name" autocomplete="off" placeholder="Enter middle name" v-model="form_data.middle_name">
+								<label for="region">Region </label>
+								<input type="text" class="input" name="region" autocomplete="off" placeholder="Enter region" v-model="form_data.region">
 							</div>
-							<ValidationProvider tag="div" class="group bordered" name="last name" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="last_name">Last Name *</label>
-								<input type="text" class="input" name="last_name" autocomplete="off" placeholder="Enter last name" v-model="form_data.last_name">
-								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-							</ValidationProvider>
 						</div>
-						<div class="group_inline two">
-							<ValidationProvider tag="div" class="group bordered" name="subtitle" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="subtitle">Subtitle *</label>
-								<input type="text" class="input" name="subtitle" autocomplete="off" placeholder="Enter subtitle" v-model="form_data.subtitle">
+						<div class="group_inline three">
+							<ValidationProvider tag="div" class="group bordered" name="country code" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="country_code">Country Code *</label>
+								<input type="text" class="input" name="country_code" autocomplete="off" placeholder="Enter country code" v-model="form_data.country_code">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
-							<ValidationProvider tag="div" class="group bordered" name="date" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="date">Date *</label>
-								<v-ctk v-model="form_data.date" :format="'YYYY-MM-DD'" :only-date="true" :no-button="true" :formatted="'YYYY-MM-DD'" :no-label="true" :color="'#FF9000'" :id="'date'" :name="'date'" :label="'Select date'"></v-ctk>
+							<ValidationProvider tag="div" class="group bordered" name="currency" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="currency">Currency Code*</label>
+								<input type="text" class="input" name="currency" autocomplete="off" placeholder="Enter currency code" v-model="form_data.currency">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<ValidationProvider tag="div" class="group bordered" name="flag" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="flag">Flag *</label>
+								<input type="text" class="input" name="flag" autocomplete="off" placeholder="Enter flag" v-model="form_data.flag">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
 						</div>
 						<div class="group bordered">
-							<label for="description">Description *</label>
+							<label for="policy">CSR Policy *</label>
 							<quill-editor
-								class="editor description"
-								:value="form_data.description"
-								@change="updateWysiwyg($event, 'description')"
+								class="editor policy"
+								:value="form_data.policy"
+								@change="updateWysiwyg($event, 'policy')"
 							/>
-							<transition name="slide"><span class="validate" v-if="validation.description">The Description field is required</span></transition>
+							<transition name="slide"><span class="validate" v-if="validation.policy">The CSR Policy field is required</span></transition>
+						</div>
+						<div class="group bordered">
+							<label for="gti_facts">GTI Facts *</label>
+							<quill-editor
+								class="editor gti_facts"
+								:value="form_data.gti_facts"
+								@change="updateWysiwyg($event, 'gti_facts')"
+							/>
+							<transition name="slide"><span class="validate" v-if="validation.gti_facts">The GTI Facts field is required</span></transition>
+						</div>
+						<div class="group bordered">
+							<label for="acknowledgement">Acknowledgement *</label>
+							<quill-editor
+								class="editor acknowledgement"
+								:value="form_data.acknowledgement"
+								@change="updateWysiwyg($event, 'acknowledgement')"
+							/>
+							<transition name="slide"><span class="validate" v-if="validation.acknowledgement">The Acknowledgement field is required</span></transition>
 						</div>
 					</div>
 				</div>
 				<div class="box mb">
 					<div class="top_box">
-						<h2>Asset</h2>
+						<h2>Marine Waste</h2>
 					</div>
 					<div class="bottom_box">
-						<div class="group nmb">
-							<image-handler-container
-								:multiple="false"
-								:input_name="'image'"
-							/>
+						<div class="group_inline two">
+							<ValidationProvider tag="div" class="group bordered" name="marine cost 1" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="marine_cost_1">Cost 1*</label>
+								<input type="number" class="input" name="marine_cost_1" autocomplete="off" placeholder="Enter cost 1" v-model="form_data.marine_cost_1">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<ValidationProvider tag="div" class="group bordered" name="marine year 1" :rules="{ required: true, max:4 }" v-slot="{ errors }">
+								<label for="marine_cost_year_1">Year 1*</label>
+								<input type="number" class="input" name="marine_cost_year_1" autocomplete="off" placeholder="Enter year 1" v-model="form_data.marine_cost_year_1">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
 						</div>
-						<div class="group nmb">
-							<asset-container />
+						<div class="group_inline two">
+							<ValidationProvider tag="div" class="group bordered" name="marine cost 2" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="marine_cost_2">Cost 2*</label>
+								<input type="number" class="input" name="marine_cost_2" autocomplete="off" placeholder="Enter cost 2" v-model="form_data.marine_cost_2">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<ValidationProvider tag="div" class="group bordered" name="marine year 2" :rules="{ required: true, max:4 }" v-slot="{ errors }">
+								<label for="marine_cost_year_2">Year 2*</label>
+								<input type="number" class="input" name="marine_cost_year_2" autocomplete="off" placeholder="Enter year 2" v-model="form_data.marine_cost_year_2">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+						</div>
+						<ValidationProvider tag="div" class="group bordered" name="marine cost total" :rules="{ required: true }" v-slot="{ errors }">
+							<label for="marine_cost_total">Cost Total*</label>
+							<input type="number" class="input" name="marine_cost_total" autocomplete="off" placeholder="Enter cost total" v-model="form_data.marine_cost_total">
+							<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+						</ValidationProvider>
+					</div>
+				</div>
+				<div class="box mb">
+					<div class="top_box">
+						<h2>Urban Waste</h2>
+					</div>
+					<div class="bottom_box">
+						<div class="group_inline two">
+							<ValidationProvider tag="div" class="group bordered" name="urban cost 1" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="urban_cost_1">Cost 1*</label>
+								<input type="text" class="input" name="urban_cost_1" autocomplete="off" placeholder="Enter cost 1" v-model="form_data.urban_cost_1">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<ValidationProvider tag="div" class="group bordered" name="urban year 1" :rules="{ required: true, max:4 }" v-slot="{ errors }">
+								<label for="urban_cost_year_1">Year 1*</label>
+								<input type="number" class="input" name="urban_cost_year_1" autocomplete="off" placeholder="Enter year 1" v-model="form_data.urban_cost_year_1">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+						</div>
+						<div class="group_inline two">
+							<ValidationProvider tag="div" class="group bordered" name="urban cost 2" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="urban_cost_2">Cost 2*</label>
+								<input type="text" class="input" name="urban_cost_2" autocomplete="off" placeholder="Enter cost 2" v-model="form_data.urban_cost_2">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<ValidationProvider tag="div" class="group bordered" name="urban year 2" :rules="{ required: true, max:4 }" v-slot="{ errors }">
+								<label for="urban_cost_year_2">Year 2*</label>
+								<input type="number" class="input" name="urban_cost_year_2" autocomplete="off" placeholder="Enter year 2" v-model="form_data.urban_cost_year_2">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+						</div>
+						<ValidationProvider tag="div" class="group bordered" name="urban cost total" :rules="{ required: true }" v-slot="{ errors }">
+							<label for="urban_cost_total">Cost Total*</label>
+							<input type="number" class="input" name="urban_cost_total" autocomplete="off" placeholder="Enter cost total" v-model="form_data.urban_cost_total">
+							<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+						</ValidationProvider>
+					</div>
+				</div>
+				<div class="box mb">
+					<div class="top_box">
+						<h2>Estimations</h2>
+					</div>
+					<div class="bottom_box">
+						<div class="group_inline three">
+							<ValidationProvider tag="div" class="group bordered" name="economic losses" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="economic_losses">Economic Losses *</label>
+								<input type="text" class="input" name="economic_losses" autocomplete="off" placeholder="Enter economic losses" v-model="form_data.economic_losses">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<ValidationProvider tag="div" class="group bordered" name="cigarettes consumed" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="cigarettes_consumed">Cigarettes consumed *</label>
+								<input type="text" class="input" name="cigarettes_consumed" autocomplete="off" placeholder="Enter cigarettes consumed" v-model="form_data.cigarettes_consumed">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<ValidationProvider tag="div" class="group bordered" name="consumption in sticks" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="consumption">Consumption in sticks *</label>
+								<input type="text" class="input" name="consumption" autocomplete="off" placeholder="Enter consumption in sticks" v-model="form_data.consumption">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+						</div>
+						<div class="group_inline three">
+							<ValidationProvider tag="div" class="group bordered" name="low estimate" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="low_estimate">Low estimate *</label>
+								<input type="number" class="input" name="low_estimate" autocomplete="off" placeholder="Enter low estimate" v-model="form_data.low_estimate">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<ValidationProvider tag="div" class="group bordered" name="average estimate" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="average_estimate">Average estimate *</label>
+								<input type="number" class="input" name="average_estimate" autocomplete="off" placeholder="Enter average estimate" v-model="form_data.average_estimate">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<ValidationProvider tag="div" class="group bordered" name="high estimate" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="high_estimate">High estimate *</label>
+								<input type="number" class="input" name="high_estimate" autocomplete="off" placeholder="Enter high estimate" v-model="form_data.high_estimate">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
 						</div>
 					</div>
 				</div>
 				<div class="box mb">
 					<div class="top_box">
-						<h2>Metatags</h2>
+						<h2>Companies</h2>
 					</div>
 					<div class="bottom_box">
-						<ValidationProvider tag="div" class="group bordered" name="meta title" :rules="{ required: true, min: 50, max: 100 }" v-slot="{ errors }">
-							<label for="meta_title">Meta Title *</label>
-							<input type="text" class="input" name="meta_title" autocomplete="off" placeholder="Enter meta title" v-model="form_data.meta_title">
-							<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-						</ValidationProvider>
-						<ValidationProvider tag="div" class="group bordered" name="meta description" :rules="{ required: true, min: 150, max: 200 }" v-slot="{ errors }">
-							<label for="meta_description">Meta Description *</label>
-							<textarea name="meta_description" class="input" rows="8" placeholder="Enter meta description" v-model="form_data.meta_description"></textarea>
-							<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-						</ValidationProvider>
+						<div class="group bordered filled multi">
+							<label for="items">Company</label>
+							<multiselect placeholder="Search a item" id="items" label="name" track-by="id"
+								:options="companies"
+								:multiple="true"
+								:close-on-select="true"
+								:hide-selected="true"
+								v-model="form_data.company">
+							</multiselect>
+						</div>
+					</div>
+				</div>
+				<div class="box mb">
+					<div class="top_box">
+						<h2>References</h2>
+					</div>
+					<div class="bottom_box">
+						<ul class="gallery">
+							<li v-for="(item, index) in form_data.reference" :key="index">
+								<div class="group bordered">
+									<label :for="`content_${index}`">Content  {{index + 1}}*</label>
+									<quill-editor
+										:class="`editor content_${index}`"
+										:value="item.content"
+										@change="updateWysiwyg($event, index, false, true, 'reference')"
+									/>
+									<transition name="slide"><span class="validate" v-if="item.validation">The Content {{index + 1}} field is required</span></transition>
+								</div>
+								<ValidationProvider tag="div" class="group bordered" :name="`sequence ${index+1}`" :rules="{ required: true,numeric: true, min_value: 1 }" v-slot="{ errors }">
+									<label :for="`sequence_${index}`">Sequence {{index+1}} *</label>
+									<input type="number" class="input" name="sequence[]" autocomplete="off" placeholder="Enter sequence" v-model="item.sequence">
+									<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+								</ValidationProvider>
+								<template v-if="form_data.reference.length != 1">
+									<div class="actions inline centered nmb">
+										<div class="cancel button pointer" @click="itemAction('remove', index)">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"  fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+											<span>Remove</span>
+										</div>
+									</div>
+								</template>
+							</li>
+							<li v-if="form_data.reference.length > 0">
+								<div class="actions inline centered">
+									<div class="info button pointer" @click="itemAction('add')">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+										<span>Add reference</span>
+									</div>
+								</div>
+							</li>
+						</ul>
 					</div>
 				</div>
 				<div class="buttons fixed">
@@ -132,56 +274,155 @@
 		data: ({ $moment }) => ({
 			loaded: false,
 			validation: {
-				description: false
+				policy: false,
+				gti_facts: false,
+				acknowledgement: false,
+				reference: [false],
 			},
 			form_data: {
 				publish: false,
-				category_id: 1,
-				first_name: '',
-				middle_name: '',
-				last_name: '',
-				title: '',
-				subtitle: '',
-				description: '',
-				date: $moment().format('YYYY-MM-DD'),
-				meta_title: '',
-				meta_description: ''
-			}
+				name: null,
+				country_code: null,
+				flag: null,
+				currency: null,
+				region: null,
+				economic_losses: null,
+				cigarettes_consumed: null,
+				gti_facts: '',
+				policy: '',
+				acknowledgement: '',
+				low_estimate: null,
+				average_estimate: null,
+				high_estimate: null,
+				consumption: null,
+				marine_cost_1: null,
+				marine_cost_year_1: null,
+				marine_cost_2: null,
+				marine_cost_year_2: null,
+				marine_cost_total: null,
+				urban_cost_1: null,
+				urban_cost_year_1: null,
+				urban_cost_2: null,
+				urban_cost_year_2: null,
+				urban_cost_total: null,
+				company: [],
+				company_sequence: [],
+				reference: [
+					{
+						content: '',
+						sequence: 0,
+						validation: false,
+					},
+				],
+			},
+			companies: [],
 		}),
 		methods: {
 			toggle (type) {
 				this.form_data[type] ^= true
 			},
+			itemAction(type, index=0) {
+				const me = this
+				switch (type) {
+					case 'add':
+						me.form_data.reference.push({
+							content: '',
+							sequence: 0,
+							validation: false,
+						})
+						break;
+					case 'remove':
+						me.form_data.reference.splice(index, 1)
+						break;
+				}
+			},
 			submit () {
-				this.$refs.form.validate().then(success => {
+				const me = this
+				me.$refs.form.validate().then(success => {
 					if (!success) {
-						this.validateWysiwyg(this, ['description'])
-						this.$scrollTo('.validate', {
+						me.validateWysiwyg(me, ['policy', 'gti_facts', 'acknowledgement'])
+						me.validateWysiwyg(me, ['reference'], true)
+						me.$scrollTo('.validate', {
 							offset: -250
 						})
 						return
 					} else {
-						this.toggleModalStatus({ type: 'loader', status: true })
-						// axios
-						setTimeout( () => {
-							this.toggleModalStatus({ type: 'loader', status: false })
-						}, 500)
+						me.toggleModalStatus({ type: 'loader', status: true })
+						let form_data = new FormData()
+
+						form_data.append('publish', me.form_data.publish ? 1 : 0)
+						form_data.append('name', me.form_data.name)
+						form_data.append('region', me.form_data.region)
+						form_data.append('country_code', me.form_data.country_code)
+						form_data.append('flag', me.form_data.flag)
+						form_data.append('currency', me.form_data.currency)
+						form_data.append('region', me.form_data.region)
+						form_data.append('economic_losses', me.form_data.economic_losses)
+						form_data.append('cigarettes_consumed', me.form_data.cigarettes_consumed)
+						form_data.append('gti_facts', me.form_data.gti_facts)
+						form_data.append('policy', me.form_data.policy)
+						form_data.append('acknowledgement', me.form_data.acknowledgement)
+						form_data.append('low_estimate', me.form_data.low_estimate)
+						form_data.append('average_estimate', me.form_data.average_estimate)
+						form_data.append('high_estimate', me.form_data.high_estimate)
+						form_data.append('consumption', me.form_data.consumption)
+						form_data.append('marine_cost_1', me.form_data.marine_cost_1)
+						form_data.append('marine_cost_year_1', me.form_data.marine_cost_year_1)
+						form_data.append('marine_cost_2', me.form_data.marine_cost_2)
+						form_data.append('marine_cost_year_2', me.form_data.marine_cost_year_2)
+						form_data.append('marine_cost_total', me.form_data.marine_cost_total)
+						form_data.append('urban_cost_1', me.form_data.urban_cost_1)
+						form_data.append('urban_cost_year_1', me.form_data.urban_cost_year_1)
+						form_data.append('urban_cost_2', me.form_data.urban_cost_2)
+						form_data.append('urban_cost_year_2', me.form_data.urban_cost_year_2)
+						form_data.append('urban_cost_total', me.form_data.urban_cost_total)
+
+						me.form_data.company.forEach((item, index) => {
+							form_data.append('company[]', item.id)
+							form_data.append('company_sequence[]', index+1)
+						})
+
+						me.form_data.reference.forEach((item, index) => {
+							form_data.append('reference[]', item.content)
+							form_data.append('reference_sequence[]', item.sequence)
+						})
+
+						me.$axios.post('admin/country/create', form_data).then(res => {
+							me.$store.dispatch('global/toast/addToast', { type: 'success', message: 'Item has been added!' })
+							me.$router.push(`/country/${res.data.res.id}/update`)
+						}).catch(err => {
+							me.toggleModalStatus({ type: 'catcher', status: true, item: { errors: err.response.data.errors } })
+						}).then(() => {
+							setTimeout( () => {
+								me.toggleModalStatus({ type: 'loader', status: false })
+							}, 500)
+						})
 					}
-					this.$nextTick(() => {
-						this.$refs.form.reset()
+					me.$nextTick(() => {
+						me.$refs.form.reset()
 					})
 				})
 			}
 		},
 		mounted () {
-			this.toggleModalStatus({ type: 'loader', status: true })
+			const me = this
+			console.log(me.companies)
+			me.toggleModalStatus({ type: 'loader', status: true })
 			setTimeout( () => {
-				this.toggleModalStatus({ type: 'loader', status: false })
-				this.loaded = true
+				me.toggleModalStatus({ type: 'loader', status: false })
+				me.loaded = true
 			}, 500)
 		},
-		asyncData ({ store }) {
+		asyncData ({ $axios, store }) {
 			store.commit('global/settings/populateTitle', { title: 'Form Layout' })
+
+			return $axios.$post('admin/company/get-all-company?all=true').then(({ res }) => {
+				return {
+					companies: res
+				}
+			}).catch(({ response: { data: { errors } } }) => {
+				store.commit('global/modal/toggleModalStatus', { type: 'catcher', status: true, item: { errors: errors } })
+			})
 		}
 	}
 </script>
