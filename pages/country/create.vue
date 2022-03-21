@@ -168,14 +168,14 @@
 								<input type="text" class="input" name="economic_losses" autocomplete="off" placeholder="Enter economic losses" v-model="form_data.economic_losses">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
-							<ValidationProvider tag="div" class="group bordered" name="cigarettes consumed" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="cigarettes_consumed">Cigarettes consumed *</label>
-								<input type="text" class="input" name="cigarettes_consumed" autocomplete="off" placeholder="Enter cigarettes consumed" v-model="form_data.cigarettes_consumed">
-								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-							</ValidationProvider>
 							<ValidationProvider tag="div" class="group bordered" name="consumption in sticks" :rules="{ required: true }" v-slot="{ errors }">
 								<label for="consumption">Consumption in sticks *</label>
 								<input type="text" class="input" name="consumption" autocomplete="off" placeholder="Enter consumption in sticks" v-model="form_data.consumption">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<ValidationProvider tag="div" class="group bordered" name="death" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="death">Death *</label>
+								<input type="text" class="input" name="death" autocomplete="off" placeholder="Enter death" v-model="form_data.death">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
 						</div>
@@ -203,16 +203,17 @@
 						<h2>Companies</h2>
 					</div>
 					<div class="bottom_box">
-						<div class="group bordered filled multi">
-							<label for="items">Company</label>
-							<multiselect placeholder="Search a item" id="items" label="name" track-by="id"
+						<ValidationProvider tag="div" class="group bordered multi nmb" name="company" :rules="{ required: true }" v-slot="{ errors }">
+							<label for="items">company *</label>
+							<multiselect placeholder="Search a item" id="company" label="name" track-by="id"
 								:options="companies"
 								:multiple="true"
 								:close-on-select="true"
 								:hide-selected="true"
 								v-model="form_data.company">
 							</multiselect>
-						</div>
+							<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+						</ValidationProvider>
 					</div>
 				</div>
 				<div class="box mb">
@@ -288,6 +289,7 @@
 				region: null,
 				economic_losses: null,
 				cigarettes_consumed: null,
+				death: null,
 				gti_facts: '',
 				policy: '',
 				acknowledgement: '',
@@ -358,7 +360,7 @@
 						form_data.append('currency', me.form_data.currency)
 						form_data.append('region', me.form_data.region)
 						form_data.append('economic_losses', me.form_data.economic_losses)
-						form_data.append('cigarettes_consumed', me.form_data.cigarettes_consumed)
+						form_data.append('death', me.form_data.death)
 						form_data.append('gti_facts', me.form_data.gti_facts)
 						form_data.append('policy', me.form_data.policy)
 						form_data.append('acknowledgement', me.form_data.acknowledgement)
@@ -414,7 +416,7 @@
 			}, 500)
 		},
 		asyncData ({ $axios, store }) {
-			store.commit('global/settings/populateTitle', { title: 'Form Layout' })
+			store.commit('global/settings/populateTitle', { title: 'Country' })
 
 			return $axios.$post('admin/company/get-all-company?all=true').then(({ res }) => {
 				return {

@@ -2,7 +2,7 @@
 	<div id="sidebar" :class="[ (has_toggled) ? 'floating' : '', 'hovered' ]" @focus="enter()" @mouseenter="enter()" @mouseleave="leave()">
 		<div class="top">
 			<img src="/logo.png" />
-			<h2>Designblue Manila</h2>
+			<h2>Good Governance<br> in Tobacco Control</h2>
 			<!-- <div class="toggle pointer" @click="toggleNav()">
 				<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="#ff9000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fill">
 					<circle cx="12" cy="12" r="10"></circle>
