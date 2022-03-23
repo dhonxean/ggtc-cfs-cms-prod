@@ -57,22 +57,22 @@
 							</ValidationProvider>
 						</div>
 						<div class="group bordered">
-							<label for="policy">CSR Policy *</label>
+							<label for="csr_policy">CSR Policy *</label>
 							<quill-editor
-								class="editor policy"
-								:value="form_data.policy"
-								@change="updateWysiwyg($event, 'policy')"
+								class="editor csr_policy"
+								:value="form_data.csr_policy"
+								@change="updateWysiwyg($event, 'csr_policy')"
 							/>
-							<transition name="slide"><span class="validate" v-if="validation.policy">The CSR Policy field is required</span></transition>
+							<transition name="slide"><span class="validate" v-if="validation.csr_policy">The CSR Policy field is required</span></transition>
 						</div>
 						<div class="group bordered">
-							<label for="gti_facts">GTI Facts *</label>
+							<label for="csr_local_examples">CSR local examples *</label>
 							<quill-editor
-								class="editor gti_facts"
-								:value="form_data.gti_facts"
-								@change="updateWysiwyg($event, 'gti_facts')"
+								class="editor csr_local_examples"
+								:value="form_data.csr_local_examples"
+								@change="updateWysiwyg($event, 'csr_local_examples')"
 							/>
-							<transition name="slide"><span class="validate" v-if="validation.gti_facts">The GTI Facts field is required</span></transition>
+							<transition name="slide"><span class="validate" v-if="validation.csr_local_examples">The CSR local examples field is required</span></transition>
 						</div>
 						<div class="group bordered">
 							<label for="acknowledgement">Acknowledgement *</label>
@@ -87,112 +87,65 @@
 				</div>
 				<div class="box mb">
 					<div class="top_box">
-						<h2>Marine Waste</h2>
-					</div>
-					<div class="bottom_box">
-						<div class="group_inline two">
-							<ValidationProvider tag="div" class="group bordered" name="marine cost 1" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="marine_cost_1">Cost 1*</label>
-								<input type="number" class="input" name="marine_cost_1" autocomplete="off" placeholder="Enter cost 1" v-model="form_data.marine_cost_1">
-								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-							</ValidationProvider>
-							<ValidationProvider tag="div" class="group bordered" name="marine year 1" :rules="{ required: true, max:4 }" v-slot="{ errors }">
-								<label for="marine_cost_year_1">Year 1*</label>
-								<input type="number" class="input" name="marine_cost_year_1" autocomplete="off" placeholder="Enter year 1" v-model="form_data.marine_cost_year_1">
-								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-							</ValidationProvider>
-						</div>
-						<div class="group_inline two">
-							<ValidationProvider tag="div" class="group bordered" name="marine cost 2" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="marine_cost_2">Cost 2*</label>
-								<input type="number" class="input" name="marine_cost_2" autocomplete="off" placeholder="Enter cost 2" v-model="form_data.marine_cost_2">
-								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-							</ValidationProvider>
-							<ValidationProvider tag="div" class="group bordered" name="marine year 2" :rules="{ required: true, max:4 }" v-slot="{ errors }">
-								<label for="marine_cost_year_2">Year 2*</label>
-								<input type="number" class="input" name="marine_cost_year_2" autocomplete="off" placeholder="Enter year 2" v-model="form_data.marine_cost_year_2">
-								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-							</ValidationProvider>
-						</div>
-						<ValidationProvider tag="div" class="group bordered" name="marine cost total" :rules="{ required: true }" v-slot="{ errors }">
-							<label for="marine_cost_total">Cost Total*</label>
-							<input type="number" class="input" name="marine_cost_total" autocomplete="off" placeholder="Enter cost total" v-model="form_data.marine_cost_total">
-							<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-						</ValidationProvider>
-					</div>
-				</div>
-				<div class="box mb">
-					<div class="top_box">
-						<h2>Urban Waste</h2>
-					</div>
-					<div class="bottom_box">
-						<div class="group_inline two">
-							<ValidationProvider tag="div" class="group bordered" name="urban cost 1" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="urban_cost_1">Cost 1*</label>
-								<input type="text" class="input" name="urban_cost_1" autocomplete="off" placeholder="Enter cost 1" v-model="form_data.urban_cost_1">
-								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-							</ValidationProvider>
-							<ValidationProvider tag="div" class="group bordered" name="urban year 1" :rules="{ required: true, max:4 }" v-slot="{ errors }">
-								<label for="urban_cost_year_1">Year 1*</label>
-								<input type="number" class="input" name="urban_cost_year_1" autocomplete="off" placeholder="Enter year 1" v-model="form_data.urban_cost_year_1">
-								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-							</ValidationProvider>
-						</div>
-						<div class="group_inline two">
-							<ValidationProvider tag="div" class="group bordered" name="urban cost 2" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="urban_cost_2">Cost 2*</label>
-								<input type="text" class="input" name="urban_cost_2" autocomplete="off" placeholder="Enter cost 2" v-model="form_data.urban_cost_2">
-								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-							</ValidationProvider>
-							<ValidationProvider tag="div" class="group bordered" name="urban year 2" :rules="{ required: true, max:4 }" v-slot="{ errors }">
-								<label for="urban_cost_year_2">Year 2*</label>
-								<input type="number" class="input" name="urban_cost_year_2" autocomplete="off" placeholder="Enter year 2" v-model="form_data.urban_cost_year_2">
-								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-							</ValidationProvider>
-						</div>
-						<ValidationProvider tag="div" class="group bordered" name="urban cost total" :rules="{ required: true }" v-slot="{ errors }">
-							<label for="urban_cost_total">Cost Total*</label>
-							<input type="number" class="input" name="urban_cost_total" autocomplete="off" placeholder="Enter cost total" v-model="form_data.urban_cost_total">
-							<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-						</ValidationProvider>
-					</div>
-				</div>
-				<div class="box mb">
-					<div class="top_box">
-						<h2>Estimations</h2>
+						<h2>Threat to Environmental harms</h2>
 					</div>
 					<div class="bottom_box">
 						<div class="group_inline three">
-							<ValidationProvider tag="div" class="group bordered" name="economic losses" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="economic_losses">Economic Losses *</label>
-								<input type="text" class="input" name="economic_losses" autocomplete="off" placeholder="Enter economic losses" v-model="form_data.economic_losses">
-								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-							</ValidationProvider>
-							<ValidationProvider tag="div" class="group bordered" name="consumption in sticks" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="consumption">Consumption in sticks *</label>
-								<input type="text" class="input" name="consumption" autocomplete="off" placeholder="Enter consumption in sticks" v-model="form_data.consumption">
-								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-							</ValidationProvider>
-							<ValidationProvider tag="div" class="group bordered" name="death" :rules="{ required: true }" v-slot="{ errors }">
+							<ValidationProvider tag="div" class="group bordered" name="Death" :rules="{ required: true }" v-slot="{ errors }">
 								<label for="death">Death *</label>
-								<input type="text" class="input" name="death" autocomplete="off" placeholder="Enter death" v-model="form_data.death">
+								<input type="number" class="input" name="death" autocomplete="off" placeholder="Enter death" v-model="form_data.death">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<ValidationProvider tag="div" class="group bordered" name="Economic Cost" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="economic_cost">Economic Cost *</label>
+								<input type="decimal" class="input" name="economic_cost" autocomplete="off" placeholder="Enter Economic Cost" v-model="form_data.economic_cost">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<ValidationProvider tag="div" class="group bordered" name="Economic Cost Currency" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="economic_cost_currency">Economic Cost Currency *</label>
+								<input type="text" class="input" name="economic_cost_currency" autocomplete="off" placeholder="Enter Economic Cost Currency" v-model="form_data.economic_cost_currency">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+						</div>
+					</div>
+				</div>
+				<div class="box mb">
+					<div class="top_box">
+						<h2>Cost Estimations </h2> 
+						<span class="description">(All cost must be USD)</span>
+					</div>
+					<div class="bottom_box">
+						<div class="group_inline three">
+							<ValidationProvider tag="div" class="group bordered" name="Cigarettes Consumed" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="cigarettes_consumed">Cigarettes Consumed *</label>
+								<input type="number" class="input" name="cigarettes_consumed" autocomplete="off" placeholder="Enter Cigarettes Consumed" v-model="form_data.cigarettes_consumed">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<ValidationProvider tag="div" class="group bordered" name="Marine Cost per ton" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="marine_cost_per_ton">Marine Cost per ton *</label>
+								<input type="decimal" class="input" name="marine_cost_per_ton" autocomplete="off" placeholder="Enter Marine Cost per ton" v-model="form_data.marine_cost_per_ton">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<ValidationProvider tag="div" class="group bordered" name="Waste Cost per ton" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="waste_cost_per_ton">Waste Cost per ton *</label>
+								<input type="decimal" class="input" name="waste_cost_per_ton" autocomplete="off" placeholder="Enter Waste Cost per ton" v-model="form_data.waste_cost_per_ton">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
 						</div>
 						<div class="group_inline three">
-							<ValidationProvider tag="div" class="group bordered" name="low estimate" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="low_estimate">Low estimate *</label>
-								<input type="number" class="input" name="low_estimate" autocomplete="off" placeholder="Enter low estimate" v-model="form_data.low_estimate">
+							<ValidationProvider tag="div" class="group bordered" name="Partial Cost" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="partial_cost">Partial Cost *</label>
+								<input type="decimal" class="input" name="partial_cost" autocomplete="off" placeholder="Enter Partial Cost" v-model="form_data.partial_cost">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
-							<ValidationProvider tag="div" class="group bordered" name="average estimate" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="average_estimate">Average estimate *</label>
-								<input type="number" class="input" name="average_estimate" autocomplete="off" placeholder="Enter average estimate" v-model="form_data.average_estimate">
+							<ValidationProvider tag="div" class="group bordered" name="Marine Pollution Cost" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="marine_pollution">Marine Pollution Cost *</label>
+								<input type="decimal" class="input" name="marine_pollution" autocomplete="off" placeholder="Enter Marine Pollution Cost" v-model="form_data.marine_pollution">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
-							<ValidationProvider tag="div" class="group bordered" name="high estimate" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="high_estimate">High estimate *</label>
-								<input type="number" class="input" name="high_estimate" autocomplete="off" placeholder="Enter high estimate" v-model="form_data.high_estimate">
+							<ValidationProvider tag="div" class="group bordered" name="Waste Management Cost" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="waste_management">Waste Management Cost *</label>
+								<input type="decimal" class="input" name="waste_management" autocomplete="off" placeholder="Enter Waste Management Cost" v-model="form_data.waste_management">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
 						</div>
@@ -237,16 +190,18 @@
 									<input type="number" class="input" name="sequence[]" autocomplete="off" placeholder="Enter sequence" v-model="item.sequence">
 									<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 								</ValidationProvider>
-								<template v-if="form_data.reference.length != 1">
-									<div class="actions inline centered nmb">
-										<div class="cancel button pointer" @click="itemAction('remove', index)">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"  fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-											<span>Remove</span>
-										</div>
+								<div class="actions inline centered nmb">
+									<div class="cancel button pointer" @click="itemAction('remove', index)">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"  fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+										<span>Remove</span>
 									</div>
-								</template>
+									<div class="info button ml ten pointer" @click="itemAction('add')" v-if="index+1 == form_data.reference.length">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+										<span>Add reference</span>
+									</div>
+								</div>
 							</li>
-							<li v-if="form_data.reference.length > 0">
+							<li v-if="form_data.reference.length == 0">
 								<div class="actions inline centered">
 									<div class="info button pointer" @click="itemAction('add')">
 										<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
@@ -275,10 +230,10 @@
 		data: ({ $moment }) => ({
 			loaded: false,
 			validation: {
-				policy: false,
-				gti_facts: false,
+				csr_policy: false,
+				csr_local_examples: false,
 				acknowledgement: false,
-				reference: [false],
+				reference: [],
 			},
 			form_data: {
 				publish: false,
@@ -286,35 +241,22 @@
 				country_code: null,
 				flag: null,
 				currency: null,
-				region: null,
-				economic_losses: null,
+				region: '',
 				death: null,
-				gti_facts: '',
-				policy: '',
-				acknowledgement: '',
-				low_estimate: null,
-				average_estimate: null,
-				high_estimate: null,
-				consumption: null,
-				marine_cost_1: null,
-				marine_cost_year_1: null,
-				marine_cost_2: null,
-				marine_cost_year_2: null,
-				marine_cost_total: null,
-				urban_cost_1: null,
-				urban_cost_year_1: null,
-				urban_cost_2: null,
-				urban_cost_year_2: null,
-				urban_cost_total: null,
+				csr_local_examples: null,
+				csr_policy: null,
+				acknowledgement: null,
+				marine_pollution: null,
+				waste_management: null,
+				cigarettes_consumed: null,
+				economic_cost: null,
+				economic_cost_currency: null,
+				marine_cost_per_ton: null,
+				waste_cost_per_ton: null,
+				partial_cost: null,
 				company: [],
 				company_sequence: [],
-				reference: [
-					{
-						content: '',
-						sequence: 0,
-						validation: false,
-					},
-				],
+				reference: [],
 			},
 			companies: [],
 			res: [],
@@ -342,7 +284,7 @@
 				const me = this
 				me.$refs.form.validate().then(success => {
 					if (!success) {
-						me.validateWysiwyg(me, ['policy', 'gti_facts', 'acknowledgement'])
+						me.validateWysiwyg(me, ['csr_policy', 'csr_local_examples', 'acknowledgement'])
 						me.validateWysiwyg(me, ['reference'], true)
 						me.$scrollTo('.validate', {
 							offset: -250
@@ -354,30 +296,22 @@
 
 						form_data.append('publish', me.form_data.publish ? 1 : 0)
 						form_data.append('name', me.form_data.name)
-						form_data.append('region', me.form_data.region)
 						form_data.append('country_code', me.form_data.country_code)
 						form_data.append('flag', me.form_data.flag)
 						form_data.append('currency', me.form_data.currency)
 						form_data.append('region', me.form_data.region)
-						form_data.append('economic_losses', me.form_data.economic_losses)
 						form_data.append('death', me.form_data.death)
-						form_data.append('gti_facts', me.form_data.gti_facts)
-						form_data.append('policy', me.form_data.policy)
+						form_data.append('csr_local_examples', me.form_data.csr_local_examples)
+						form_data.append('csr_policy', me.form_data.csr_policy)
 						form_data.append('acknowledgement', me.form_data.acknowledgement)
-						form_data.append('low_estimate', me.form_data.low_estimate)
-						form_data.append('average_estimate', me.form_data.average_estimate)
-						form_data.append('high_estimate', me.form_data.high_estimate)
-						form_data.append('consumption', me.form_data.consumption)
-						form_data.append('marine_cost_1', me.form_data.marine_cost_1)
-						form_data.append('marine_cost_year_1', me.form_data.marine_cost_year_1)
-						form_data.append('marine_cost_2', me.form_data.marine_cost_2)
-						form_data.append('marine_cost_year_2', me.form_data.marine_cost_year_2)
-						form_data.append('marine_cost_total', me.form_data.marine_cost_total)
-						form_data.append('urban_cost_1', me.form_data.urban_cost_1)
-						form_data.append('urban_cost_year_1', me.form_data.urban_cost_year_1)
-						form_data.append('urban_cost_2', me.form_data.urban_cost_2)
-						form_data.append('urban_cost_year_2', me.form_data.urban_cost_year_2)
-						form_data.append('urban_cost_total', me.form_data.urban_cost_total)
+						form_data.append('marine_pollution', me.form_data.marine_pollution)
+						form_data.append('waste_management', me.form_data.waste_management)
+						form_data.append('cigarettes_consumed', me.form_data.cigarettes_consumed)
+						form_data.append('economic_cost', me.form_data.economic_cost)
+						form_data.append('economic_cost_currency', me.form_data.economic_cost_currency)
+						form_data.append('marine_cost_per_ton', me.form_data.marine_cost_per_ton)
+						form_data.append('waste_cost_per_ton', me.form_data.waste_cost_per_ton)
+						form_data.append('partial_cost', me.form_data.partial_cost)
 
 						me.form_data.company.forEach((item, index) => {
 							form_data.append('company[]', item.id)
@@ -421,13 +355,7 @@
 			return $axios.$get(`admin/country/info/${params.slug}`).then(({ res }) => {
 				let record = res
 				let companies = []
-				let reference = [
-					{
-						content: '',
-						sequence: 0,
-						validation: false,
-					},
-				]
+				let reference = []
 				if (record.references.length) {
 					reference = []
 					record.references.forEach((item, index) => {
@@ -454,25 +382,21 @@
 							flag: record.flag,
 							currency: record.currency,
 							region: record.region,
-							economic_losses: record.country_detail != null ? record.country_detail.economic_losses : null,
+
 							death: record.country_detail != null ? record.country_detail.death : null,
-							gti_facts: record.country_detail != null ? record.country_detail.gti_facts : null,
-							policy: record.country_detail != null ? record.country_detail.policy : null,
+							csr_local_examples: record.country_detail != null ? record.country_detail.csr_local_examples : null,
+							csr_policy: record.country_detail != null ? record.country_detail.csr_policy : null,
 							acknowledgement: record.country_detail != null ? record.country_detail.acknowledgement : null,
-							low_estimate: record.cost_estimation != null ? record.cost_estimation.low : null,
-							average_estimate: record.cost_estimation != null ? record.cost_estimation.average : null,
-							high_estimate: record.cost_estimation != null ? record.cost_estimation.high : null,
-							consumption: record.cost_estimation != null ? record.cost_estimation.consumption : null,
-							marine_cost_1: record.marine_waste != null ? record.marine_waste.cost_1 : null,
-							marine_cost_year_1: record.marine_waste != null ? record.marine_waste.cost_year_1 : null,
-							marine_cost_2: record.marine_waste != null ? record.marine_waste.cost_2 : null,
-							marine_cost_year_2: record.marine_waste != null ? record.marine_waste.cost_year_2 : null,
-							marine_cost_total: record.marine_waste != null ? record.marine_waste.cost_of_collection : null,
-							urban_cost_1: record.urban_waste != null ? record.urban_waste.cost_1 : null,
-							urban_cost_year_1: record.urban_waste != null ? record.urban_waste.cost_year_1 : null,
-							urban_cost_2: record.urban_waste != null ? record.urban_waste.cost_2 : null,
-							urban_cost_year_2: record.urban_waste != null ? record.urban_waste.cost_year_2 : null,
-							urban_cost_total: record.urban_waste != null ? record.urban_waste.cost_of_collection : null,
+
+							marine_pollution: record.cost_estimation != null ? record.cost_estimation.marine_pollution : null,
+							waste_management: record.cost_estimation != null ? record.cost_estimation.waste_management : null,
+							cigarettes_consumed: record.cost_estimation != null ? record.cost_estimation.cigarettes_consumed : null,
+							economic_cost: record.cost_estimation != null ? record.cost_estimation.economic_cost : null,
+							economic_cost_currency: record.cost_estimation != null ? record.cost_estimation.economic_cost_currency : null,
+							marine_cost_per_ton: record.cost_estimation != null ? record.cost_estimation.marine_cost_per_ton : null,
+							waste_cost_per_ton: record.cost_estimation != null ? record.cost_estimation.waste_cost_per_ton : null,
+							partial_cost: record.cost_estimation != null ? record.cost_estimation.partial_cost : null,
+
 							company: companies,
 							reference: reference
 						}

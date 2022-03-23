@@ -54,13 +54,23 @@ Vue.mixin({
 			if (custom) {
 				wysiwygs.forEach((wysiwyg, key) => {
 					page.form_data[wysiwyg].forEach((item, index) => {
-						item.validation = (item.content.length <= 0) ? true : false
+						if (item.content == null || item.content == '') {
+							item.validation = true
+						}
+						else {
+							item.validation = (item.content.length <= 0) ? true : false
+						}
 					})
 				})
 			}
 			else {
 				wysiwygs.forEach((wysiwyg, key) => {
-					page.validation[wysiwyg] = (page.form_data[wysiwyg].length <= 0) ? true : false
+					if (page.form_data[wysiwyg] == null) {
+						page.validation[wysiwyg] = true
+					}
+					else {
+						page.validation[wysiwyg] = (page.form_data[wysiwyg].length <= 0) ? true : false
+					}
 				})
 			}
 		},
