@@ -1,6 +1,6 @@
 <template lang="html">
 	<div id="dashboard" v-if="loaded">
-		<div class="box_parent full nmb">
+		<!-- <div class="box_parent full nmb">
 			<div class="box nmb">
 				<div class="top_box">
 					<h2>Sample</h2>
@@ -16,7 +16,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 	</div>
 </template>
 
