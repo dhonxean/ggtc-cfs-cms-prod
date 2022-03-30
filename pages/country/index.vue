@@ -56,11 +56,11 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="stick">
+					<!-- <th class="stick">
 						<div class="label pointer">
 							Flag
 						</div>
-					</th>
+					</th> -->
 					<th class="stick sort">
 						<div :class="`label pointer ${sort.name ? 'asc' : 'desc'}`" @click="sort_table('name')">
 							Name
@@ -90,9 +90,9 @@
 			</thead>
 			<tbody v-if="records.data.length > 0">
 				<tr v-for="(data, key) in records.data" :key="key">
-					<td>
+					<!-- <td>
 						{{ data.flag }}
-					</td>
+					</td> -->
 					<td>
 						<nuxt-link :to="`/country/${data.id}/update`" class="name pointer">
 							{{ data.name }}
@@ -121,7 +121,7 @@
 			</tbody>
 			<tbody class="no_results" v-else>
 				<tr>
-					<td colspan="6">No Result(s) Found.</td>
+					<td colspan="5">No Result(s) Found.</td>
 				</tr>
 			</tbody>
 		</table>

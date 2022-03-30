@@ -39,7 +39,7 @@
 								<input type="text" class="input" name="region" autocomplete="off" placeholder="Enter region" v-model="form_data.region">
 							</div>
 						</div>
-						<div class="group_inline three">
+						<div class="group_inline two">
 							<ValidationProvider tag="div" class="group bordered" name="country code" :rules="{ required: true }" v-slot="{ errors }">
 								<label for="country_code">Country Code *</label>
 								<input type="text" class="input" name="country_code" autocomplete="off" placeholder="Enter country code" v-model="form_data.country_code">
@@ -50,11 +50,11 @@
 								<input type="text" class="input" name="currency" autocomplete="off" placeholder="Enter currency code" v-model="form_data.currency">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
-							<ValidationProvider tag="div" class="group bordered" name="flag" :rules="{ required: true }" v-slot="{ errors }">
+							<!-- <ValidationProvider tag="div" class="group bordered" name="flag" :rules="{ required: true }" v-slot="{ errors }">
 								<label for="flag">Flag *</label>
 								<input type="text" class="input" name="flag" autocomplete="off" placeholder="Enter flag" v-model="form_data.flag">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-							</ValidationProvider>
+							</ValidationProvider> -->
 						</div>
 						<div class="group bordered">
 							<label for="csr_policy">CSR Policy *</label>
@@ -296,7 +296,6 @@
 						form_data.append('publish', me.form_data.publish ? 1 : 0)
 						form_data.append('name', me.form_data.name)
 						form_data.append('country_code', me.form_data.country_code)
-						form_data.append('flag', me.form_data.flag)
 						form_data.append('currency', me.form_data.currency)
 						form_data.append('region', me.form_data.region)
 						form_data.append('death', me.form_data.death)
