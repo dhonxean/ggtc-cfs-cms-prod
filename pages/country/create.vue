@@ -50,11 +50,6 @@
 								<input type="text" class="input" name="currency" autocomplete="off" placeholder="Enter currency code" v-model="form_data.currency">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
-							<!-- <ValidationProvider tag="div" class="group bordered" name="flag" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="flag">Flag *</label>
-								<input type="text" class="input" name="flag" autocomplete="off" placeholder="Enter flag" v-model="form_data.flag">
-								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-							</ValidationProvider> -->
 						</div>
 						<div class="group bordered">
 							<label for="csr_policy">CSR Policy *</label>
