@@ -39,7 +39,7 @@
 								<input type="text" class="input" name="region" autocomplete="off" placeholder="Enter region" v-model="form_data.region">
 							</div>
 						</div>
-						<div class="group_inline two">
+						<div class="group_inline three">
 							<ValidationProvider tag="div" class="group bordered" name="country code" :rules="{ required: true }" v-slot="{ errors }">
 								<label for="country_code">Country Code *</label>
 								<input type="text" class="input" name="country_code" autocomplete="off" placeholder="Enter country code" v-model="form_data.country_code">
@@ -48,6 +48,11 @@
 							<ValidationProvider tag="div" class="group bordered" name="currency" :rules="{ required: true }" v-slot="{ errors }">
 								<label for="currency">Currency Code*</label>
 								<input type="text" class="input" name="currency" autocomplete="off" placeholder="Enter currency code" v-model="form_data.currency">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<ValidationProvider tag="div" class="group bordered" name="currency symbol" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="currency_symbol">Currency Symbol*</label>
+								<input type="text" class="input" name="currency_symbol" autocomplete="off" placeholder="Enter currency symbol" v-model="form_data.currency_symbol">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
 						</div>
@@ -102,6 +107,23 @@
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
 						</div>
+						<div class="group_inline three">
+							<ValidationProvider tag="div" class="group bordered" name="Cigarettes Consumed" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="cigarettes_consumed">Cigarettes Consumed *</label>
+								<input type="number" class="input" name="cigarettes_consumed" autocomplete="off" placeholder="Enter Cigarettes Consumed" v-model="form_data.cigarettes_consumed">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<ValidationProvider tag="div" class="group bordered" name="Cigarettes Consumed Unit" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="cigarettes_consumed_unit">Cigarettes Consumed Unit *</label>
+								<input type="text" class="input" name="cigarettes_consumed_unit" autocomplete="off" placeholder="Enter Cigarettes Consumed Unit" v-model="form_data.cigarettes_consumed_unit">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<ValidationProvider tag="div" class="group bordered" name="Cigarettes Sticks" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="cigarettes_sticks">Cigarettes Sticks *</label>
+								<input type="number" class="input" name="cigarettes_sticks" autocomplete="off" placeholder="Enter Cigarettes Sticks" v-model="form_data.cigarettes_sticks">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+						</div>
 					</div>
 				</div>
 				<div class="box mb">
@@ -110,12 +132,7 @@
 						<span class="description">(All cost must be USD)</span>
 					</div>
 					<div class="bottom_box">
-						<div class="group_inline three">
-							<ValidationProvider tag="div" class="group bordered" name="Cigarettes Consumed" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="cigarettes_consumed">Cigarettes Consumed *</label>
-								<input type="number" class="input" name="cigarettes_consumed" autocomplete="off" placeholder="Enter Cigarettes Consumed" v-model="form_data.cigarettes_consumed">
-								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-							</ValidationProvider>
+						<div class="group_inline two">
 							<ValidationProvider tag="div" class="group bordered" name="Marine Cost per ton" :rules="{ required: true }" v-slot="{ errors }">
 								<label for="marine_cost_per_ton">Marine Cost per ton *</label>
 								<input type="decimal" class="input" name="marine_cost_per_ton" autocomplete="off" placeholder="Enter Marine Cost per ton" v-model="form_data.marine_cost_per_ton">
@@ -236,6 +253,7 @@
 				country_code: null,
 				flag: null,
 				currency: null,
+				currency_symbol: null,
 				region: '',
 				death: null,
 				csr_local_examples: null,
@@ -244,8 +262,10 @@
 				marine_pollution: null,
 				waste_management: null,
 				cigarettes_consumed: null,
+				cigarettes_consumed_unit: null,
 				economic_cost: null,
 				economic_cost_currency: null,
+				cigarettes_sticks: null,
 				marine_cost_per_ton: null,
 				waste_cost_per_ton: null,
 				partial_cost: null,
@@ -294,6 +314,7 @@
 						form_data.append('country_code', me.form_data.country_code)
 						// form_data.append('flag', me.form_data.flag)
 						form_data.append('currency', me.form_data.currency)
+						form_data.append('currency_symbol', me.form_data.currency_symbol)
 						form_data.append('region', me.form_data.region)
 						form_data.append('death', me.form_data.death)
 						form_data.append('csr_local_examples', me.form_data.csr_local_examples)
@@ -302,8 +323,10 @@
 						form_data.append('marine_pollution', me.form_data.marine_pollution)
 						form_data.append('waste_management', me.form_data.waste_management)
 						form_data.append('cigarettes_consumed', me.form_data.cigarettes_consumed)
+						form_data.append('cigarettes_consumed_unit', me.form_data.cigarettes_consumed_unit)
 						form_data.append('economic_cost', me.form_data.economic_cost)
 						form_data.append('economic_cost_currency', me.form_data.economic_cost_currency)
+						form_data.append('cigarettes_sticks', me.form_data.cigarettes_sticks)
 						form_data.append('marine_cost_per_ton', me.form_data.marine_cost_per_ton)
 						form_data.append('waste_cost_per_ton', me.form_data.waste_cost_per_ton)
 						form_data.append('partial_cost', me.form_data.partial_cost)
@@ -376,6 +399,7 @@
 							country_code: record.iso2,
 							// flag: record.flag,
 							currency: record.currency,
+							currency_symbol: record.currency_symbol,
 							region: record.region,
 
 							death: record.country_detail != null ? record.country_detail.death : null,
@@ -386,8 +410,10 @@
 							marine_pollution: record.cost_estimation != null ? record.cost_estimation.marine_pollution : null,
 							waste_management: record.cost_estimation != null ? record.cost_estimation.waste_management : null,
 							cigarettes_consumed: record.cost_estimation != null ? record.cost_estimation.cigarettes_consumed : null,
+							cigarettes_consumed_unit: record.cost_estimation != null ? record.cost_estimation.cigarettes_consumed_unit : null,
 							economic_cost: record.cost_estimation != null ? record.cost_estimation.economic_cost : null,
 							economic_cost_currency: record.cost_estimation != null ? record.cost_estimation.economic_cost_currency : null,
+							cigarettes_sticks: record.cost_estimation != null ? record.cost_estimation.cigarettes_sticks : null,
 							marine_cost_per_ton: record.cost_estimation != null ? record.cost_estimation.marine_cost_per_ton : null,
 							waste_cost_per_ton: record.cost_estimation != null ? record.cost_estimation.waste_cost_per_ton : null,
 							partial_cost: record.cost_estimation != null ? record.cost_estimation.partial_cost : null,

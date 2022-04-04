@@ -2,7 +2,7 @@
 	<div id="login">
 		<div class="wrapper">
 			<div class="left">
-				<img src="/company-banner.png" />
+				<img src="/company-banner.jpg" />
 			</div>
 			<div class="right">
 				<div class="overlay">
