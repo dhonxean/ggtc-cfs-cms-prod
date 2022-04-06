@@ -163,6 +163,18 @@ Vue.mixin({
 				slug = data.toLowerCase().replace(/\s/g, '-')
 			}
 			return slug
+		},
+		convertCurrency(selected_rates, number) {
+			const me = this
+			var converted = 0
+			if (number != null && number != '') {
+				converted = Number(number) * Number(selected_rates)
+			}
+
+			return Number(converted).toLocaleString(undefined, {
+				minimumFractionDigits: Number(converted) % 1 ? 1 : 0,
+				maximumFractionDigits: Number(converted) % 1 ? 1 : 0
+			})
 		}
 	}
 })

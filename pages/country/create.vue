@@ -47,7 +47,7 @@
 							</ValidationProvider>
 							<ValidationProvider tag="div" class="group bordered" name="currency" :rules="{ required: true }" v-slot="{ errors }">
 								<label for="currency">Currency Code*</label>
-								<input type="text" class="input" name="currency" autocomplete="off" placeholder="Enter currency code" v-model="form_data.currency">
+								<input type="text" class="input" name="currency" autocomplete="off" placeholder="Enter currency code" v-model="form_data.currency" @change="setDefaultCurrency()">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
 							<div class="group bordered">
@@ -125,10 +125,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="box mb">
-					<div class="top_box">
-						<h2>Cost Estimations </h2> 
-						<span class="description">(All cost must be USD)</span>
+				<!-- <div class="box mb">
+					<div class="top_box inline two">
+						<h2>Cost Estimations in USD</h2> 
+						<h2>Cost Estimations in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency : 'Country Currency' }}</h2> 
 					</div>
 					<div class="bottom_box">
 						<div class="group_inline two">
@@ -159,6 +159,78 @@
 								<input type="decimal" class="input" name="partial_cost" autocomplete="off" placeholder="Enter Partial Cost" v-model="form_data.partial_cost">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
+						</div>
+					</div>
+				</div> -->
+				<div class="box mb">
+					<div class="top_box">
+						<h2>Cost Estimations in USD</h2> 
+					</div>
+					<div class="bottom_box">
+						<div class="group_inline two">
+							<ValidationProvider tag="div" class="group bordered" name="Marine Cost per ton" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="marine_cost_per_ton">Marine Cost per ton *</label>
+								<input type="decimal" class="input" name="marine_cost_per_ton" autocomplete="off" placeholder="Enter Marine Cost per ton" v-model="form_data.marine_cost_per_ton">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<div class="group viewing">
+								<label for="">Marine Cost per ton in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency : 'Country Currency' }}</label>
+								<div class="field-input">
+									= {{ form_data.currency_symbol }} {{ convertCurrency(selected_rates, form_data.marine_cost_per_ton) }}
+								</div>
+							</div>
+						</div>
+						<div class="group_inline two">
+							<ValidationProvider tag="div" class="group bordered" name="Waste Cost per ton" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="waste_cost_per_ton">Waste Cost per ton *</label>
+								<input type="decimal" class="input" name="waste_cost_per_ton" autocomplete="off" placeholder="Enter Waste Cost per ton" v-model="form_data.waste_cost_per_ton">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<div class="group viewing">
+								<label for="">Waste Cost per ton in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency : 'Country Currency' }}</label>
+								<div class="field-input">
+									= {{ form_data.currency_symbol }} {{ convertCurrency(selected_rates, form_data.waste_cost_per_ton) }}
+								</div>
+							</div>
+						</div>
+						<div class="group_inline two">
+							<ValidationProvider tag="div" class="group bordered" name="Marine Pollution Cost" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="marine_pollution">Marine Pollution Cost *</label>
+								<input type="decimal" class="input" name="marine_pollution" autocomplete="off" placeholder="Enter Marine Pollution Cost" v-model="form_data.marine_pollution">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<div class="group viewing">
+								<label for="">Marine Pollution Cost in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency : 'Country Currency' }}</label>
+								<div class="field-input">
+									= {{ form_data.currency_symbol }} {{ convertCurrency(selected_rates, form_data.marine_pollution) }}
+								</div>
+							</div>
+						</div>
+						<div class="group_inline two">
+							<ValidationProvider tag="div" class="group bordered" name="Waste Management Cost" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="waste_management">Waste Management Cost *</label>
+								<input type="decimal" class="input" name="waste_management" autocomplete="off" placeholder="Enter Waste Management Cost" v-model="form_data.waste_management">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<div class="group viewing">
+								<label for="">Waste Management Cost in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency : 'Country Currency' }}</label>
+								<div class="field-input">
+									= {{ form_data.currency_symbol }} {{ convertCurrency(selected_rates, form_data.waste_management) }}
+								</div>
+							</div>
+						</div>
+						<div class="group_inline two">
+							<ValidationProvider tag="div" class="group bordered" name="Partial Cost" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="partial_cost">Partial Cost *</label>
+								<input type="decimal" class="input" name="partial_cost" autocomplete="off" placeholder="Enter Partial Cost" v-model="form_data.partial_cost">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider>
+							<div class="group viewing">
+								<label for="">Partial Cost in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency : 'Country Currency' }}</label>
+								<div class="field-input">
+									= {{ form_data.currency_symbol }} {{ convertCurrency(selected_rates, form_data.partial_cost) }}
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -273,6 +345,8 @@
 				reference: [],
 			},
 			companies: [],
+			rates: [],
+			selected_rates: 1,
 		}),
 		methods: {
 			toggle (type) {
@@ -353,16 +427,35 @@
 						me.$refs.form.reset()
 					})
 				})
-			}
+			},
+			getCurrency() {
+				const me = this
+				me.$axios.get('admin/currency-rate/get-currency').then(res => {
+					me.rates = res.data.res
+				}).catch(err => {
+					me.toggleModalStatus({ type: 'catcher', status: true, item: { errors: err.response.data.errors } })
+				}).then(() => {
+					setTimeout( () => {
+						me.toggleModalStatus({ type: 'loader', status: false })
+						me.loaded = true
+					}, 500)
+				})
+			},
+			setDefaultCurrency() {
+				const me  = this
+				me.selected_rates = 1
+
+				me.rates.forEach((item, index) => {
+					if (item.name.toLowerCase() == me.form_data.currency.toLowerCase()) {
+						me.selected_rates = item.amount
+					}
+				})
+			},
 		},
 		mounted () {
 			const me = this
-			console.log(me.companies)
 			me.toggleModalStatus({ type: 'loader', status: true })
-			setTimeout( () => {
-				me.toggleModalStatus({ type: 'loader', status: false })
-				me.loaded = true
-			}, 500)
+			me.getCurrency()
 		},
 		asyncData ({ $axios, store }) {
 			store.commit('global/settings/populateTitle', { title: 'Country' })
