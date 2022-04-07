@@ -2,13 +2,9 @@
 	<div id="dashboard" v-if="loaded">
 
 		<div class="actions">
-			<nuxt-link to="/company" class="cancel button pointer">
+			<nuxt-link to="/translation/language" class="cancel button pointer">
 				<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
 				<span>Back</span>
-			</nuxt-link>
-			<nuxt-link to="/company/create" class="success ml ten button pointer">
-				<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-				<span>Add Another</span>
 			</nuxt-link>
 		</div>
 
@@ -21,7 +17,12 @@
 					<div class="bottom_box">
 						<ValidationProvider tag="div" class="group bordered" name="name" :rules="{ required: true }" v-slot="{ errors }">
 							<label for="name">Name *</label>
-							<input type="text" class="input" name="name" autocomplete="off" placeholder="Enter company name" v-model="form_data.name">
+							<input type="text" class="input" name="name" autocomplete="off" placeholder="Enter language name" v-model="form_data.name">
+							<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+						</ValidationProvider>
+						<ValidationProvider tag="div" class="group bordered" name="language code" :rules="{ required: true }" v-slot="{ errors }">
+							<label for="code">Language Code *</label>
+							<input type="text" class="input" name="code" autocomplete="off" placeholder="Enter language code" v-model="form_data.code">
 							<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 						</ValidationProvider>
 					</div>
@@ -41,6 +42,7 @@
 			loaded: false,
 			form_data: {
 				name: null,
+				code: null,
 			},
 		}),
 		methods: {
@@ -57,10 +59,11 @@
 						let form_data = new FormData()
 
 						form_data.append('name', me.form_data.name)
+						form_data.append('code', me.form_data.code)
 
-						me.$axios.post(`v1/admin/company/update/${me.$route.params.slug}`, form_data).then(res => {
-							me.$store.dispatch('global/toast/addToast', { type: 'success', message: 'Item has been updated!' })
-							me.$nuxt.refresh()
+						me.$axios.post('v2/admin/language/create', form_data).then(res => {
+							me.$store.dispatch('global/toast/addToast', { type: 'success', message: 'Item has been added!' })
+							me.$router.push(`/translation/language/${res.data.res.id}/update`)
 						}).catch(err => {
 							me.toggleModalStatus({ type: 'catcher', status: true, item: { errors: err.response.data.errors } })
 						}).then(() => {
@@ -83,18 +86,9 @@
 				me.loaded = true
 			}, 500)
 		},
-		asyncData ({ $axios, store, params }) {
-			store.commit('global/settings/populateTitle', { title: 'company' })
+		asyncData ({ $axios, store }) {
+			store.commit('global/settings/populateTitle', { title: 'Language' })
 
-			return $axios.$get(`v1/admin/company/info/${params.slug}`).then(({ res }) => {
-				return {
-					form_data: {
-						name: res.name,
-					}
-				}
-			}).catch(({ response: { data: { errors } } }) => {
-				store.commit('global/modal/toggleModalStatus', { type: 'catcher', status: true, item: { errors: errors } })
-			})
 		}
 	}
 </script>

@@ -6,6 +6,10 @@
 				<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
 				<span>Back</span>
 			</nuxt-link>
+			<nuxt-link to="/country/create" class="success ml ten button pointer">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+				<span>Add Another</span>
+			</nuxt-link>
 		</div>
 
 		<ValidationObserver tag="div" ref="form">
@@ -415,7 +419,7 @@
 							form_data.append('reference_sequence[]', item.sequence)
 						})
 
-						me.$axios.post(`admin/country/update/${me.$route.params.slug}`, form_data).then(res => {
+						me.$axios.post(`v1/admin/country/update/${me.$route.params.slug}`, form_data).then(res => {
 							me.$store.dispatch('global/toast/addToast', { type: 'success', message: 'Item has been updated!' })
 							me.$nuxt.refresh()
 						}).catch(err => {
@@ -433,7 +437,7 @@
 			},
 			getCurrency() {
 				const me = this
-				me.$axios.get('admin/currency-rate/get-currency').then(res => {
+				me.$axios.get('v1/admin/currency-rate/get-currency').then(res => {
 					me.rates = res.data.res
 					me.setDefaultCurrency()
 				}).catch(err => {
@@ -465,7 +469,7 @@
 		asyncData ({ $axios, store, params }) {
 			store.commit('global/settings/populateTitle', { title: 'Country' })
 
-			return $axios.$get(`admin/country/info/${params.slug}`).then(({ res }) => {
+			return $axios.$get(`v1/admin/country/info/${params.slug}`).then(({ res }) => {
 				let record = res
 				let companies = []
 				let reference = []
@@ -484,7 +488,7 @@
 						companies.push(item.company)
 					}
 				})
-				return $axios.$post('admin/company/get-all-company?all=true').then(({ res }) => {
+				return $axios.$post('v1/admin/company/get-all-company?all=true').then(({ res }) => {
 					return {
 						companies: res,
 						res: record,
