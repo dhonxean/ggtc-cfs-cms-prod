@@ -716,6 +716,8 @@ span
 		align-items: flex-start
 		justify-content: flex-start
 		margin-bottom: 20px
+		&.center
+			align-items: center
 		&.no_align
 			align-items: unset
 		&.between
@@ -1125,6 +1127,8 @@ span
 			color: $primary
 			padding-bottom: 5px
 			transition: .3s ease-in-out
+			&.l
+				brandon_medium(14px, true)
 		&.pt
 			padding-top: 20px
 		&.select
@@ -1167,6 +1171,8 @@ span
 			color: $black
 			appearance: none
 			transition: .3s ease-in-out
+			&.np
+				padding: 10px 0 0 0
 			&.search
 				background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjN0E3QTdBIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgY2xhc3M9ImZlYXRoZXIgZmVhdGhlci1zZWFyY2giPjxjaXJjbGUgY3g9IjExIiBjeT0iMTEiIHI9IjgiPjwvY2lyY2xlPjxsaW5lIHgxPSIyMSIgeTE9IjIxIiB4Mj0iMTYuNjUiIHkyPSIxNi42NSI+PC9saW5lPjwvc3ZnPgo=')
 				background-position: calc(100% - 5px) center
@@ -1266,6 +1272,8 @@ span
 				border-bottom: 0
 				transition: .3s ease-in-out
 				font-size: 18px
+				&.pt20
+					padding-top: 20px
 				&:focus
 					transition: .3s ease-in-out
 	.buttons

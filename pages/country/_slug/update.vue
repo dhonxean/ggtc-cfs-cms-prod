@@ -466,7 +466,7 @@
 			me.toggleModalStatus({ type: 'loader', status: true })
 			me.getCurrency()
 		},
-		asyncData ({ $axios, store, params }) {
+		asyncData ({ $axios, store, error, params }) {
 			store.commit('global/settings/populateTitle', { title: 'Country' })
 
 			return $axios.$get(`v1/admin/country/info/${params.slug}`).then(({ res }) => {
@@ -525,7 +525,7 @@
 					store.commit('global/modal/toggleModalStatus', { type: 'catcher', status: true, item: { errors: errors } })
 				})
 			}).catch(({ response: { data: { errors } } }) => {
-				store.commit('global/modal/toggleModalStatus', { type: 'catcher', status: true, item: { errors: errors } })
+				error({ statusCode: 404, message: 'Page not found' })
 			})
 		}
 	}

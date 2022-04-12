@@ -104,7 +104,7 @@
 				me.loaded = true
 			}, 500)
 		},
-		asyncData ({ $axios, store, params }) {
+		asyncData ({ $axios, store, error, params }) {
 			store.commit('global/settings/populateTitle', { title: 'World Country' })
 
 			return $axios.$get(`v2/admin/world-country/info/${params.slug}`).then(({ res }) => {
@@ -122,7 +122,7 @@
 					store.commit('global/modal/toggleModalStatus', { type: 'catcher', status: true, item: { errors: errors } })
 				})
 			}).catch(({ response: { data: { errors } } }) => {
-				store.commit('global/modal/toggleModalStatus', { type: 'catcher', status: true, item: { errors: errors } })
+				error({ statusCode: 404, message: 'Page not found' })
 			})
 		}
 	}

@@ -83,7 +83,7 @@
 				me.loaded = true
 			}, 500)
 		},
-		asyncData ({ $axios, store, params }) {
+		asyncData ({ $axios, store, error, params }) {
 			store.commit('global/settings/populateTitle', { title: 'company' })
 
 			return $axios.$get(`v1/admin/company/info/${params.slug}`).then(({ res }) => {
@@ -93,7 +93,7 @@
 					}
 				}
 			}).catch(({ response: { data: { errors } } }) => {
-				store.commit('global/modal/toggleModalStatus', { type: 'catcher', status: true, item: { errors: errors } })
+				error({ statusCode: 404, message: 'Page not found' })
 			})
 		}
 	}
