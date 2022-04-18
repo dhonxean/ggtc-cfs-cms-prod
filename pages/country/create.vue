@@ -45,9 +45,21 @@
 								<input type="text" class="input" name="country_code" autocomplete="off" placeholder="Enter country code" v-model="form_data.country_code">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
-							<ValidationProvider tag="div" class="group bordered" name="currency" :rules="{ required: true }" v-slot="{ errors }">
+							<!-- <ValidationProvider tag="div" class="group bordered" name="currency" :rules="{ required: true }" v-slot="{ errors }">
 								<label for="currency">Currency Code*</label>
 								<input type="text" class="input" name="currency" autocomplete="off" placeholder="Enter currency code" v-model="form_data.currency" @change="setDefaultCurrency()">
+								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+							</ValidationProvider> -->
+							<ValidationProvider tag="div" class="group bordered multi nmb" name="currency code" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="items">Currency Code *</label>
+								<multiselect placeholder="Search a item" id="currency_code" label="name" track-by="id"
+									:options="rates"
+									:multiple="false"
+									:close-on-select="true"
+									:hide-selected="true"
+									@close="setDefaultCurrency()"
+									v-model="form_data.currency">
+								</multiselect>
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
 							<div class="group bordered">
@@ -128,7 +140,7 @@
 				<!-- <div class="box mb">
 					<div class="top_box inline two">
 						<h2>Cost Estimations in USD</h2> 
-						<h2>Cost Estimations in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency : 'Country Currency' }}</h2> 
+						<h2>Cost Estimations in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</h2> 
 					</div>
 					<div class="bottom_box">
 						<div class="group_inline two">
@@ -174,7 +186,7 @@
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
 							<div class="group viewing">
-								<label for="">Marine Cost per ton in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency : 'Country Currency' }}</label>
+								<label for="">Marine Cost per ton in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</label>
 								<div class="field-input">
 									= {{ form_data.currency_symbol }} {{ convertCurrency(selected_rates, form_data.marine_cost_per_ton) }}
 								</div>
@@ -187,7 +199,7 @@
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
 							<div class="group viewing">
-								<label for="">Waste Cost per ton in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency : 'Country Currency' }}</label>
+								<label for="">Waste Cost per ton in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</label>
 								<div class="field-input">
 									= {{ form_data.currency_symbol }} {{ convertCurrency(selected_rates, form_data.waste_cost_per_ton) }}
 								</div>
@@ -200,7 +212,7 @@
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
 							<div class="group viewing">
-								<label for="">Marine Pollution Cost in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency : 'Country Currency' }}</label>
+								<label for="">Marine Pollution Cost in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</label>
 								<div class="field-input">
 									= {{ form_data.currency_symbol }} {{ convertCurrency(selected_rates, form_data.marine_pollution) }}
 								</div>
@@ -213,7 +225,7 @@
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
 							<div class="group viewing">
-								<label for="">Waste Management Cost in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency : 'Country Currency' }}</label>
+								<label for="">Waste Management Cost in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</label>
 								<div class="field-input">
 									= {{ form_data.currency_symbol }} {{ convertCurrency(selected_rates, form_data.waste_management) }}
 								</div>
@@ -226,7 +238,7 @@
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
 							<div class="group viewing">
-								<label for="">Partial Cost in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency : 'Country Currency' }}</label>
+								<label for="">Partial Cost in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</label>
 								<div class="field-input">
 									= {{ form_data.currency_symbol }} {{ convertCurrency(selected_rates, form_data.partial_cost) }}
 								</div>
@@ -384,8 +396,8 @@
 						form_data.append('publish', me.form_data.publish ? 1 : 0)
 						form_data.append('name', me.form_data.name)
 						form_data.append('country_code', me.form_data.country_code)
-						form_data.append('currency', me.form_data.currency)
-						form_data.append('currency_symbol', me.form_data.currency_symbol)
+						form_data.append('currency', me.form_data.currency.id)
+						form_data.append('currency_symbol', me.form_data.currency_symbol != null ? me.form_data.currency_symbol : '')
 						form_data.append('region', me.form_data.region)
 						form_data.append('death', me.form_data.death)
 						form_data.append('csr_local_examples', me.form_data.csr_local_examples)
@@ -430,7 +442,7 @@
 			},
 			getCurrency() {
 				const me = this
-				me.$axios.get('v1/admin/currency-rate/get-currency').then(res => {
+				me.$axios.post('v1/admin/currency-rate/get-all-currency?all=true').then(res => {
 					me.rates = res.data.res
 				}).catch(err => {
 					me.toggleModalStatus({ type: 'catcher', status: true, item: { errors: err.response.data.errors } })
@@ -443,13 +455,7 @@
 			},
 			setDefaultCurrency() {
 				const me  = this
-				me.selected_rates = 1
-
-				me.rates.forEach((item, index) => {
-					if (item.name.toLowerCase() == me.form_data.currency.toLowerCase()) {
-						me.selected_rates = item.amount
-					}
-				})
+				me.selected_rates = me.form_data.currency != null ? me.form_data.currency.amount : 1
 			},
 		},
 		mounted () {

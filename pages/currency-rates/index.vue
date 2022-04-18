@@ -2,9 +2,9 @@
 	<div id="dashboard" v-if="loaded">
 
 		<div class="actions">
-			<nuxt-link to="/country/create" class="success button pointer">
+			<nuxt-link to="/currency-rates/create" class="success button pointer">
 				<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-				<span>Add Country</span>
+				<span>Add Currency</span>
 			</nuxt-link>
 		</div>
 
@@ -28,10 +28,9 @@
 							<div :class="[ 'group select bordered', (form.sort_by.length > 0) ? 'filled' : '' ]">
 								<label for="sample_v2">Sort By</label>
 								<select class="input" name="sort_by" v-model="form.sort_by">
-									<option value="iso2">Code</option>
-									<option value="currency">Currency</option>
-									<option value="name">Name</option>
-									<option value="publish">Publish</option>
+									<option value="name">Curreny Name</option>
+									<option value="amount">amount</option>
+									<option value="created_at">Created At</option>
 								</select>
 								<div class="dd"></div>
 							</div>
@@ -56,29 +55,19 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<!-- <th class="stick">
-						<div class="label pointer">
-							Flag
-						</div>
-					</th> -->
 					<th class="stick sort">
 						<div :class="`label pointer ${sort.name ? 'asc' : 'desc'}`" @click="sort_table('name')">
-							Name
+							Currency Name
 						</div>
 					</th>
 					<th class="stick sort">
-						<div :class="`label pointer ${sort.iso2 ? 'asc' : 'desc'}`" @click="sort_table('iso2')">
-							Code
-						</div>
-					</th>
-					<th class="stick">
-						<div :class="`label pointer`">
-							Currency
+						<div :class="`label pointer ${sort.amount ? 'asc' : 'desc'}`" @click="sort_table('amount')">
+							Amount
 						</div>
 					</th>
 					<th class="stick sort">
-						<div :class="`label pointer ${sort.publish ? 'asc' : 'desc'}`" @click="sort_table('publish')">
-							Publish
+						<div :class="`label pointer ${sort.created_at ? 'asc' : 'desc'}`" @click="sort_table('created_at')">
+							Created At
 						</div>
 					</th>
 					<th class="stick">
@@ -90,28 +79,20 @@
 			</thead>
 			<tbody v-if="records.data.length > 0">
 				<tr v-for="(data, key) in records.data" :key="key">
-					<!-- <td>
-						{{ data.flag }}
-					</td> -->
 					<td>
-						<nuxt-link :to="`/country/${data.id}/update`" class="name pointer">
+						<nuxt-link :to="`/currency-rates/${data.id}/update`" class="name pointer">
 							{{ data.name }}
 						</nuxt-link>
 					</td>
-					<td>{{ data.iso2 }}</td>
-					<td>{{ data.currency_rate != null ? data.currency_rate.name : 'N/A' }}</td>
-					<td :class="`bg ${data.publish ? 'primary' : 'cancel' } upper`">
-						<span>
-							{{ data.publish ? 'Yes' : 'No' }}
-						</span>
-					</td>
+					<td>{{ data.amount }}</td>
+					<td>{{ $moment(data.created_at).format('MMM DD YYYY') }}</td>
 					<td class="buttons" width="210px">
 						<div class="wrapper">
-							<nuxt-link :to="`/country/${data.id}/update`" class="item info pointer">
+							<nuxt-link :to="`/currency-rates/${data.id}/update`" class="item info pointer">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" class="icon"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
 								<span>Edit</span>
 							</nuxt-link>
-							<div class="item ml cancel pointer" @click="toggleModalStatus({ type: 'delete_confirmation', status: true, item: { api: `v1/admin/country/delete/${data.id}`, item_type: 'country' } })">
+							<div class="item ml cancel pointer" @click="toggleModalStatus({ type: 'delete_confirmation', status: true, item: { api: `v1/admin/currency-rate/delete/${data.id}`, item_type: 'currency' } })">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" class="icon"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
 								<span>Delete</span>
 							</div>
@@ -144,9 +125,8 @@
 			},
 			sort: {
 				name: true, //true = asc | false = desc
-				iso2: true,
-				currency: true,
-				publish: true,
+				amount: false,
+				created_at: false,
 			},
 			has_search: true,
 			records: [],
@@ -162,7 +142,7 @@
 			fetchData() {
 				const me = this
 				me.toggleModalStatus({ type: 'loader', status: true })
-				me.$axios.$post('v1/admin/country/get-country', me.form).then(({ res }) => {
+				me.$axios.$post('v1/admin/currency-rate/get-all-currency', me.form).then(({ res }) => {
 					me.records = res
 				}).catch(({ response: { data: { errors } } }) => {
 					me.toggleModalStatus({ type: 'catcher', status: true, item: { errors: errors } })
@@ -183,9 +163,12 @@
 			}, 500)
 		},
 		asyncData ({ $axios, store }) {
-			store.commit('global/settings/populateTitle', { title: 'Country' })
-
-			return $axios.$post('v1/admin/country/get-country').then(({ res }) => {
+			store.commit('global/settings/populateTitle', { title: 'Currency Rates' })
+			let form_data = {
+				sort_by: 'name',
+				order_type: 'asc'
+			}
+			return $axios.$post('v1/admin/currency-rate/get-all-currency', form_data).then(({ res }) => {
 				return {
 					records: res
 				}
