@@ -6,6 +6,10 @@
 				<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
 				<span>Back</span>
 			</nuxt-link>
+			<nuxt-link :to="`/country/${$route.params.slug}/translation/create`" class="success ml ten button pointer">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+				<span>Add Another</span>
+			</nuxt-link>
 		</div>
 
 		<ValidationObserver tag="div" ref="form">
@@ -127,15 +131,16 @@
 					} else {
 						me.toggleModalStatus({ type: 'loader', status: true })
 						let form_data = new FormData()
+
 						form_data.append('country_id', me.$route.params.slug)
 						form_data.append('language_id', me.form_data.language_id.id)
 						form_data.append('csr_policy', me.form_data.csr_policy)
 						form_data.append('csr_local_examples', me.form_data.csr_local_examples)
 						form_data.append('csr_acknowledgement', me.form_data.csr_acknowledgement)
 
-						me.$axios.post('v2/admin/dynamic-translation/create', form_data).then(res => {
-							me.$store.dispatch('global/toast/addToast', { type: 'success', message: 'Item has been added!' })
-							me.$router.push(`/country/${me.$route.params.slug}/translation/${res.data.res.id}/update`)
+						me.$axios.post(`v2/admin/dynamic-translation/update/${me.$route.params.language}`, form_data).then(res => {
+							me.$store.dispatch('global/toast/addToast', { type: 'success', message: 'Item has been updated!' })
+							me.$nuxt.refresh()
 						}).catch(err => {
 							me.toggleModalStatus({ type: 'catcher', status: true, item: { errors: err.response.data.errors } })
 						}).then(() => {
@@ -158,15 +163,27 @@
 				me.loaded = true
 			}, 500)
 		},
-		asyncData ({ $axios, store, params, error }) {
+		asyncData ({ $axios, store, error, params }) {
 			store.commit('global/settings/populateTitle', { title: 'Country' })
+
 			return $axios.$get(`v1/admin/country/info/${params.slug}`).then(({ res }) => {
 				let country = res
-				return $axios.$post('v2/admin/language/get-all-language?all=true').then(({ res }) => {
-					return {
-						languages: res,
-						country: country
+				return $axios.$get(`v2/admin/dynamic-translation/info/${ params.language }`).then(({ res }) => {
+					let form = {
+						language_id: res.language,
+						csr_policy: res.csr_policy != null ? res.csr_policy : '',
+						csr_local_examples: res.csr_local_examples != null ? res.csr_local_examples : '',
+						csr_acknowledgement: res.csr_acknowledgement != null ? res.csr_acknowledgement : '',
 					}
+					return $axios.$post('v2/admin/language/get-all-language?all=true').then(({ res }) => {
+						return {
+							languages: res,
+							country: country,
+							form_data: form
+						}
+					}).catch(({ response: { data: { errors } } }) => {
+						store.commit('global/modal/toggleModalStatus', { type: 'catcher', status: true, item: { errors: errors } })
+					})
 				}).catch(({ response: { data: { errors } } }) => {
 					store.commit('global/modal/toggleModalStatus', { type: 'catcher', status: true, item: { errors: errors } })
 				})
