@@ -2,9 +2,9 @@
 	<div id="dashboard" v-if="loaded">
 
 		<div class="actions">
-			<nuxt-link to="/translation/language/create" class="success button pointer">
+			<nuxt-link :to="`/country/${$route.params.slug}/translation/create`" class="success button pointer">
 				<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-				<span>Add Language</span>
+				<span>Add Translation</span>
 			</nuxt-link>
 		</div>
 
@@ -28,9 +28,8 @@
 							<div :class="[ 'group select bordered', (form.sort_by.length > 0) ? 'filled' : '' ]">
 								<label for="sample_v2">Sort By</label>
 								<select class="input" name="sort_by" v-model="form.sort_by">
-									<option value="code">Code</option>
+									<option value="language_id">Language Name</option>
 									<option value="created_at">Created At</option>
-									<option value="name">Name</option>
 								</select>
 								<div class="dd"></div>
 							</div>
@@ -56,13 +55,8 @@
 			<thead>
 				<tr>
 					<th class="stick sort">
-						<div :class="`label pointer ${sort.name ? 'asc' : 'desc'}`" @click="sort_table('name')">
-							Name
-						</div>
-					</th>
-					<th class="stick sort">
-						<div :class="`label pointer ${sort.code ? 'asc' : 'desc'}`" @click="sort_table('code')">
-							Language Code
+						<div :class="`label pointer ${sort.language_id ? 'asc' : 'desc'}`" @click="sort_table('language_id')">
+							Language Name
 						</div>
 					</th>
 					<th class="stick sort">
@@ -80,23 +74,18 @@
 			<tbody v-if="records.data.length > 0">
 				<tr v-for="(data, key) in records.data" :key="key">
 					<td>
-						<nuxt-link :to="`/translation/language/${data.id}/update`" class="name pointer">
-							{{ data.name }}
+						<nuxt-link :to="`/country/${$route.params.slug}/translation/${data.id}/update`" class="name pointer">
+							{{ data.language_name }}
 						</nuxt-link>
 					</td>
-					<td>{{ data.code }}</td>
 					<td>{{ $moment(data.created_at).format('MMM DD YYYY') }}</td>
-					<td class="buttons" width="380px">
+					<td class="buttons" width="230px">
 						<div class="wrapper">
-							<nuxt-link :to="`/translation/language/${data.id}/static-translation`" class="item success pointer">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-								<span>Static Translation</span>
-							</nuxt-link>
-							<nuxt-link :to="`/translation/language/${data.id}/update`" class="item ml info pointer">
+							<nuxt-link :to="`/country/${$route.params.slug}/translation/${data.id}/update`" class="item ml info pointer">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" class="icon"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
 								<span>Edit</span>
 							</nuxt-link>
-							<div class="item ml cancel pointer" @click="toggleModalStatus({ type: 'delete_confirmation', status: true, item: { api: `v2/admin/language/delete/${data.id}`, item_type: 'language' } })">
+							<div class="item ml cancel pointer" @click="toggleModalStatus({ type: 'delete_confirmation', status: true, item: { api: `v2/admin/dynamic-translation/delete/${data.id}`, item_type: 'translation' } })">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" class="icon"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
 								<span>Delete</span>
 							</div>
@@ -106,7 +95,7 @@
 			</tbody>
 			<tbody class="no_results" v-else>
 				<tr>
-					<td colspan="4">No Result(s) Found.</td>
+					<td colspan="3">No Result(s) Found.</td>
 				</tr>
 			</tbody>
 		</table>
@@ -124,13 +113,12 @@
 			filter: false,
 			form: {
 				keyword: '',
-				sort_by: 'name',
+				sort_by: 'language_id',
 				order_type: 'asc',
 			},
 			sort: {
-				name: true, //true = asc | false = desc
-				code: true,
-				created_at: true,
+				language_id: true, //true = asc | false = desc
+				created_at: false,
 			},
 			has_search: true,
 			records: [],
@@ -146,7 +134,7 @@
 			fetchData() {
 				const me = this
 				me.toggleModalStatus({ type: 'loader', status: true })
-				me.$axios.$post('v2/admin/language/get-all-language', me.form).then(({ res }) => {
+				me.$axios.$post('v2/admin/dynamic-translation/get-country-dynamic-translation', me.form).then(({ res }) => {
 					me.records = res
 				}).catch(({ response: { data: { errors } } }) => {
 					me.toggleModalStatus({ type: 'catcher', status: true, item: { errors: errors } })
@@ -166,13 +154,14 @@
 				me.loaded = true
 			}, 500)
 		},
-		asyncData ({ $axios, store }) {
-			store.commit('global/settings/populateTitle', { title: 'Language' })
-			let form_data = {
-				sort_by: 'name',
-				order_type: 'asc'
+		asyncData ({ $axios, store, params }) {
+			store.commit('global/settings/populateTitle', { title: 'Country' })
+			let form_data =  {
+				country_id: params.slug,
+				order_type: 'asc',
+				sort_by: 'language_id'
 			}
-			return $axios.$post('v2/admin/language/get-all-language', form_data).then(({ res }) => {
+			return $axios.$post('v2/admin/dynamic-translation/get-country-dynamic-translation').then(({ res }) => {
 				return {
 					records: res
 				}
