@@ -31,6 +31,22 @@
 						</ValidationProvider>
 					</div>
 				</div>
+				<div class="box">
+					<div class="top_box">
+						<h2>Asset</h2>
+					</div>
+					<div class="bottom_box nmb">
+						<div class="group nmb">
+							<image-handler-container
+								:parent="record.id"
+								:data="record.images"
+								:image_label="'Flag'"
+								:input_name="'flag'"
+								:category="'flag'"
+							/>
+						</div>
+					</div>
+				</div>
 				<div class="buttons fixed">
 					<nuxt-link to="/" class="cancel button half_width btn lg">Cancel</nuxt-link>
 					<button type="submit" class="success button half_width btn lg pointer">Submit</button>
@@ -42,12 +58,16 @@
 
 <script>
 	export default {
+		components: {
+			ImageHandlerContainer: () => import('~/components/file/ImageHandlerContainer'),
+		},
 		data: ({ $moment }) => ({
 			loaded: false,
 			form_data: {
 				name: null,
 				code: null,
 			},
+			record: [],
 		}),
 		methods: {
 			submit () {
@@ -60,10 +80,7 @@
 						return
 					} else {
 						me.toggleModalStatus({ type: 'loader', status: true })
-						let form_data = new FormData()
-
-						form_data.append('name', me.form_data.name)
-						form_data.append('code', me.form_data.code)
+						let form_data = new FormData(document.getElementById('form'))
 
 						me.$axios.post(`v2/admin/language/update/${me.$route.params.slug}`, form_data).then(res => {
 							me.$store.dispatch('global/toast/addToast', { type: 'success', message: 'Item has been updated!' })
@@ -98,7 +115,8 @@
 					form_data: {
 						name: res.name,
 						code: res.code,
-					}
+					},
+					record: res
 				}
 			}).catch(({ response: { data: { errors } } }) => {
 				error({ statusCode: 404, message: 'Page not found' })
