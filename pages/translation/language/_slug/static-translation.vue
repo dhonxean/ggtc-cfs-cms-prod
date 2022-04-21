@@ -12,7 +12,7 @@
 			<form id="form" class="form mb seventy" @submit.prevent="submit()">
 				<div class="box mb">
 					<div class="top_box">
-						<h2>Static Translation</h2>
+						<h2>Static Translation of {{ res.name }}</h2>
 						<p class="description">Don't remove the html element in English translation when translating to {{ res.name }} translation</p>
 					</div>
 					<div class="bottom_box">
@@ -81,6 +81,18 @@
 							<div class="group viewing">
 								<div class="field-input pt20">
 									{{ default_data.cultivation }}
+								</div>
+							</div>
+						</div>
+						<!-- curing  -->
+						<div class="group_inline two">
+							<div class="group bordered">
+								<label>Curing</label>
+								<textarea name="curing" class="input" rows="1" v-model="form_data.curing"></textarea>
+							</div>
+							<div class="group viewing">
+								<div class="field-input pt20">
+									{{ default_data.curing }}
 								</div>
 							</div>
 						</div>
@@ -664,10 +676,10 @@
 		data: ({ $moment, $route }) => ({
 			loaded: false,
 			default_data: {
-				header_title: "Customized Fact Sheet",
+				header_title: "Country Fact Sheet",
 				dropdown_label: "Choose a Country",
 				download: "Download",
-				infographics_title: "The estimated cost of tobacco product waste that accumulates in",
+				infographics_title: "The estimated cost of tobacco product waste that accumulates in the",
 				cultivation: "Cultivation",
 				curing: "Curing",
 				process_manufacturing: "Process & Manufacturing",
