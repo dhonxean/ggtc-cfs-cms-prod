@@ -119,7 +119,7 @@
 						</div>
 						<div class="group_inline three">
 							<ValidationProvider tag="div" class="group bordered" name="Cigarettes Consumed" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="cigarettes_consumed">Cigarettes Consumed *</label>
+								<label for="cigarettes_consumed">Cigarettes Consumed * (1 = FAR MORE)</label>
 								<input type="number" class="input" name="cigarettes_consumed" autocomplete="off" placeholder="Enter Cigarettes Consumed" v-model="form_data.cigarettes_consumed">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
