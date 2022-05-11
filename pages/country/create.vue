@@ -107,19 +107,19 @@
 								<input type="number" class="input" name="death" autocomplete="off" placeholder="Enter death" v-model="form_data.death">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
-							<ValidationProvider tag="div" class="group bordered" name="Economic Cost" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="economic_cost">Economic Cost *</label>
-								<input type="decimal" class="input" name="economic_cost" autocomplete="off" placeholder="Enter Economic Cost" v-model="form_data.economic_cost">
+							<ValidationProvider tag="div" class="group bordered" name="Economic Losses" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="economic_cost">Economic Losses * (1 = FAR MORE)</label>
+								<input type="decimal" class="input" name="economic_cost" autocomplete="off" placeholder="Enter Economic Losses" v-model="form_data.economic_cost">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
 							<div class="group bordered">
-								<label for="economic_cost_currency">Economic Cost Currency</label>
-								<input type="text" class="input" name="economic_cost_currency" autocomplete="off" placeholder="Enter Economic Cost Currency" v-model="form_data.economic_cost_currency">
+								<label for="economic_cost_currency">Economic Losses Currency</label>
+								<input type="text" class="input" name="economic_cost_currency" autocomplete="off" placeholder="Enter Economic Losses Currency" v-model="form_data.economic_cost_currency">
 							</div>
 						</div>
 						<div class="group_inline three">
 							<ValidationProvider tag="div" class="group bordered" name="Cigarettes Consumed" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="cigarettes_consumed">Cigarettes Consumed * (1 = FAR MORE)</label>
+								<label for="cigarettes_consumed">Cigarettes Consumed * </label>
 								<input type="number" class="input" name="cigarettes_consumed" autocomplete="off" placeholder="Enter Cigarettes Consumed" v-model="form_data.cigarettes_consumed">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
