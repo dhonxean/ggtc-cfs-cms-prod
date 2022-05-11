@@ -180,54 +180,54 @@
 						<div class="group_inline two">
 							<div class="group bordered">
 								<label for="marine_cost_per_ton">Marine Cost per ton</label>
-								<input @keyup="convertSelectedCurrency('local_marine_cost_per_ton', selected_rates, 'marine_cost_per_ton')" pattern="/^\d+(?:\.\d{0,2})?/" type="number" step="0.01" class="input" name="marine_cost_per_ton" autocomplete="off" placeholder="Enter Marine Cost per ton" v-model="form_data.marine_cost_per_ton">
+								<input @keyup="convertSelectedCurrency('local_marine_cost_per_ton', selected_rates, 'marine_cost_per_ton')" pattern="/^\d+(?:\.\d{0,2})?/" type="number" step="0.000000001" class="input" name="marine_cost_per_ton" autocomplete="off" placeholder="Enter Marine Cost per ton" v-model="form_data.marine_cost_per_ton">
 							</div>
 							<div class="group bordered">
 								<label for="marine_cost_per_ton">Marine Cost per ton in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</label>
-								<input @keyup="convertSelectedCurrency('marine_cost_per_ton', selected_rates, 'local_marine_cost_per_ton', 'usd')" type="number" step="0.01" class="input" name="marine_cost_per_ton" autocomplete="off" :placeholder="`Enter Marine Cost per ton in ${form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency'}`" v-model="form_data.local_marine_cost_per_ton">
+								<input @keyup="convertSelectedCurrency('marine_cost_per_ton', selected_rates, 'local_marine_cost_per_ton', 'usd')" type="number" step="0.000000001" class="input" name="marine_cost_per_ton" autocomplete="off" :placeholder="`Enter Marine Cost per ton in ${form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency'}`" v-model="form_data.local_marine_cost_per_ton">
 							</div>
 						</div>
 						<div class="group_inline two">
 							<div class="group bordered">
 								<label for="waste_cost_per_ton">Waste Cost per ton</label>
-								<input @keyup="convertSelectedCurrency('local_waste_cost_per_ton', selected_rates, 'waste_cost_per_ton')" type="number" step="0.01" class="input" name="waste_cost_per_ton" autocomplete="off" placeholder="Enter Waste Cost per ton" v-model="form_data.waste_cost_per_ton">
+								<input @keyup="convertSelectedCurrency('local_waste_cost_per_ton', selected_rates, 'waste_cost_per_ton')" type="number" step="0.000000001" class="input" name="waste_cost_per_ton" autocomplete="off" placeholder="Enter Waste Cost per ton" v-model="form_data.waste_cost_per_ton">
 							</div>
 							<div class="group bordered">
 								<label for="waste_cost_per_ton">Waste Cost per ton in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</label>
-								<input @keyup="convertSelectedCurrency('waste_cost_per_ton', selected_rates, 'local_waste_cost_per_ton', 'usd')" type="number" step="0.01" class="input" name="waste_cost_per_ton" autocomplete="off" :placeholder="`Enter Waste Cost per ton in ${form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency'}`" v-model="form_data.local_waste_cost_per_ton">
+								<input @keyup="convertSelectedCurrency('waste_cost_per_ton', selected_rates, 'local_waste_cost_per_ton', 'usd')" type="number" step="0.000000001" class="input" name="waste_cost_per_ton" autocomplete="off" :placeholder="`Enter Waste Cost per ton in ${form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency'}`" v-model="form_data.local_waste_cost_per_ton">
 							</div>
 						</div>
 						<div class="group_inline two">
 							<ValidationProvider tag="div" class="group bordered" name="Marine Pollution Cost" :rules="{ required: true }" v-slot="{ errors }">
 								<label for="marine_pollution">Marine Pollution Cost *</label>
-								<input @keyup="convertSelectedCurrency('local_marine_pollution', selected_rates, 'marine_pollution')" type="number" step="0.01" class="input" name="marine_pollution" autocomplete="off" placeholder="Enter Marine Pollution Cost" v-model="form_data.marine_pollution">
+								<input @keyup="convertSelectedCurrency('local_marine_pollution', selected_rates, 'marine_pollution')" type="number" step="0.000000001" class="input" name="marine_pollution" autocomplete="off" placeholder="Enter Marine Pollution Cost" v-model="form_data.marine_pollution">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
 							<div class="group bordered">
 								<label for="marine_pollution">Marine Pollution Cost in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</label>
-								<input @keyup="convertSelectedCurrency('marine_pollution', selected_rates, 'local_marine_pollution', 'usd')" type="number" step="0.01" class="input" name="marine_pollution" autocomplete="off" :placeholder="`Enter Marine Pollution Cost in ${form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency'}`" v-model="form_data.local_marine_pollution">
+								<input @keyup="convertSelectedCurrency('marine_pollution', selected_rates, 'local_marine_pollution', 'usd')" type="number" step="0.000000001" class="input" name="marine_pollution" autocomplete="off" :placeholder="`Enter Marine Pollution Cost in ${form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency'}`" v-model="form_data.local_marine_pollution">
 							</div>
 						</div>
 						<div class="group_inline two">
 							<ValidationProvider tag="div" class="group bordered" name="Waste Management Cost" :rules="{ required: true }" v-slot="{ errors }">
 								<label for="waste_management">Waste Management Cost *</label>
-								<input @keyup="convertSelectedCurrency('local_waste_management', selected_rates, 'waste_management')" type="number" step="0.01" class="input" name="waste_management" autocomplete="off" placeholder="Enter Waste Management Cost" v-model="form_data.waste_management">
+								<input @keyup="convertSelectedCurrency('local_waste_management', selected_rates, 'waste_management')" type="number" step="0.000000001" class="input" name="waste_management" autocomplete="off" placeholder="Enter Waste Management Cost" v-model="form_data.waste_management">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
 							<div class="group bordered">
 								<label for="waste_management">Waste Management Cost in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</label>
-								<input @keyup="convertSelectedCurrency('waste_management', selected_rates, 'local_waste_management', 'usd')" type="number" step="0.01" class="input" name="waste_management" autocomplete="off" :placeholder="`Enter Waste Management Cost in ${form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency'}`" v-model="form_data.local_waste_management">
+								<input @keyup="convertSelectedCurrency('waste_management', selected_rates, 'local_waste_management', 'usd')" type="number" step="0.000000001" class="input" name="waste_management" autocomplete="off" :placeholder="`Enter Waste Management Cost in ${form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency'}`" v-model="form_data.local_waste_management">
 							</div>
 						</div>
 						<div class="group_inline two">
 							<ValidationProvider tag="div" class="group bordered" name="Partial Cost" :rules="{ required: true }" v-slot="{ errors }">
 								<label for="partial_cost">Partial Cost *</label>
-								<input @keyup="convertSelectedCurrency('local_partial_cost', selected_rates, 'partial_cost')" type="number" step="0.01" class="input" name="partial_cost" autocomplete="off" placeholder="Enter Partial Cost" v-model="form_data.partial_cost">
+								<input @keyup="convertSelectedCurrency('local_partial_cost', selected_rates, 'partial_cost')" type="number" step="0.000000001" class="input" name="partial_cost" autocomplete="off" placeholder="Enter Partial Cost" v-model="form_data.partial_cost">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
 							<div class="group bordered">
 								<label for="partial_cost">Partial Cost in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</label>
-								<input @keyup="convertSelectedCurrency('partial_cost', selected_rates, 'local_partial_cost', 'usd')" type="number" step="0.01" class="input" name="partial_cost" autocomplete="off" :placeholder="`Enter Partial Cost in ${form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency'}`" v-model="form_data.local_partial_cost">
+								<input @keyup="convertSelectedCurrency('partial_cost', selected_rates, 'local_partial_cost', 'usd')" type="number" step="0.000000001" class="input" name="partial_cost" autocomplete="off" :placeholder="`Enter Partial Cost in ${form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency'}`" v-model="form_data.local_partial_cost">
 							</div>
 						</div>
 					</div>
@@ -472,7 +472,7 @@
 							if (me.form_data[to_convert] != null && me.form_data[to_convert] != '') {
 								converted = Number(me.form_data[to_convert]) * Number(currency_rate)
 				
-								me.form_data[value] = Number(converted.toString().match(/^\d+(?:\.\d{0,2})?/))
+								me.form_data[value] = Math.round(Number(converted.toString().match(/^\d+(?:\.\d{0,2})?/)))
 							}
 							else {
 								me.form_data[value] = null
