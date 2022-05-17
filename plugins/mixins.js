@@ -175,6 +175,10 @@ Vue.mixin({
 				minimumFractionDigits: Number(converted) % 1 ? 1 : 0,
 				maximumFractionDigits: Number(converted) % 1 ? 1 : 0
 			})
-		}
+		},
+		truncate(number, index = 2) {
+			// cutting the number
+		  return +number.toString().slice(0, (number.toString().indexOf(".")) + (index + 1));
+	  }
 	}
 })

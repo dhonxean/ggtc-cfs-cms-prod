@@ -68,15 +68,6 @@
 							</div>
 						</div>
 						<div class="group bordered">
-							<label for="csr_policy">CSR Policy *</label>
-							<quill-editor
-								class="editor csr_policy"
-								:value="form_data.csr_policy"
-								@change="updateWysiwyg($event, 'csr_policy')"
-							/>
-							<transition name="slide"><span class="validate" v-if="validation.csr_policy">The CSR Policy field is required</span></transition>
-						</div>
-						<div class="group bordered">
 							<label for="csr_local_examples">CSR local examples *</label>
 							<quill-editor
 								class="editor csr_local_examples"
@@ -86,13 +77,22 @@
 							<transition name="slide"><span class="validate" v-if="validation.csr_local_examples">The CSR local examples field is required</span></transition>
 						</div>
 						<div class="group bordered">
-							<label for="acknowledgement">Acknowledgement *</label>
+							<label for="csr_policy">CSR Policy</label>
+							<quill-editor
+								class="editor csr_policy"
+								:value="form_data.csr_policy"
+								@change="updateWysiwyg($event, 'csr_policy')"
+							/>
+							<!-- <transition name="slide"><span class="validate" v-if="validation.csr_policy">The CSR Policy field is required</span></transition> -->
+						</div>
+						<div class="group bordered">
+							<label for="acknowledgement">Acknowledgement</label>
 							<quill-editor
 								class="editor acknowledgement"
 								:value="form_data.acknowledgement"
 								@change="updateWysiwyg($event, 'acknowledgement')"
 							/>
-							<transition name="slide"><span class="validate" v-if="validation.acknowledgement">The Acknowledgement field is required</span></transition>
+							<!-- <transition name="slide"><span class="validate" v-if="validation.acknowledgement">The Acknowledgement field is required</span></transition> -->
 						</div>
 					</div>
 				</div>
@@ -107,33 +107,30 @@
 								<input type="number" class="input" name="death" autocomplete="off" placeholder="Enter death" v-model="form_data.death">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
-							<ValidationProvider tag="div" class="group bordered" name="Economic Cost" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="economic_cost">Economic Cost *</label>
-								<input type="decimal" class="input" name="economic_cost" autocomplete="off" placeholder="Enter Economic Cost" v-model="form_data.economic_cost">
+							<ValidationProvider tag="div" class="group bordered" name="Economic Losses" :rules="{ required: true }" v-slot="{ errors }">
+								<label for="economic_cost">Economic Losses * (1 = FAR MORE)</label>
+								<input type="decimal" class="input" name="economic_cost" autocomplete="off" placeholder="Enter Economic Losses" v-model="form_data.economic_cost">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
-							<ValidationProvider tag="div" class="group bordered" name="Economic Cost Currency" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="economic_cost_currency">Economic Cost Currency *</label>
-								<input type="text" class="input" name="economic_cost_currency" autocomplete="off" placeholder="Enter Economic Cost Currency" v-model="form_data.economic_cost_currency">
-								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-							</ValidationProvider>
+							<div class="group bordered">
+								<label for="economic_cost_currency">Economic Losses Currency</label>
+								<input type="text" class="input" name="economic_cost_currency" autocomplete="off" placeholder="Enter Economic Losses Currency" v-model="form_data.economic_cost_currency">
+							</div>
 						</div>
 						<div class="group_inline three">
 							<ValidationProvider tag="div" class="group bordered" name="Cigarettes Consumed" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="cigarettes_consumed">Cigarettes Consumed *</label>
+								<label for="cigarettes_consumed">Cigarettes Consumed * </label>
 								<input type="number" class="input" name="cigarettes_consumed" autocomplete="off" placeholder="Enter Cigarettes Consumed" v-model="form_data.cigarettes_consumed">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
-							<ValidationProvider tag="div" class="group bordered" name="Cigarettes Consumed Unit" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="cigarettes_consumed_unit">Cigarettes Consumed Unit *</label>
+							<div class="group bordered" name="Cigarettes Consumed Unit">
+								<label for="cigarettes_consumed_unit">Cigarettes Consumed Unit</label>
 								<input type="text" class="input" name="cigarettes_consumed_unit" autocomplete="off" placeholder="Enter Cigarettes Consumed Unit" v-model="form_data.cigarettes_consumed_unit">
-								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-							</ValidationProvider>
-							<ValidationProvider tag="div" class="group bordered" name="Cigarettes Sticks" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="cigarettes_sticks">Cigarettes Sticks *</label>
+							</div>
+							<div class="group bordered" >
+								<label for="cigarettes_sticks">Cigarettes Sticks</label>
 								<input type="number" class="input" name="cigarettes_sticks" autocomplete="off" placeholder="Enter Cigarettes Sticks" v-model="form_data.cigarettes_sticks">
-								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-							</ValidationProvider>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -177,71 +174,60 @@
 				<div class="box mb">
 					<div class="top_box">
 						<h2>Cost Estimations in USD</h2> 
+						<p class="description">Maximum of two decimals only</p>
 					</div>
 					<div class="bottom_box">
 						<div class="group_inline two">
-							<ValidationProvider tag="div" class="group bordered" name="Marine Cost per ton" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="marine_cost_per_ton">Marine Cost per ton *</label>
-								<input type="decimal" class="input" name="marine_cost_per_ton" autocomplete="off" placeholder="Enter Marine Cost per ton" v-model="form_data.marine_cost_per_ton">
-								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-							</ValidationProvider>
-							<div class="group viewing">
-								<label for="">Marine Cost per ton in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</label>
-								<div class="field-input">
-									= {{ form_data.currency_symbol }} {{ convertCurrency(selected_rates, form_data.marine_cost_per_ton) }}
-								</div>
+							<div class="group bordered">
+								<label for="marine_cost_per_ton">Marine Cost per ton</label>
+								<input @keyup="convertSelectedCurrency('local_marine_cost_per_ton', selected_rates, 'marine_cost_per_ton')" pattern="/^\d+(?:\.\d{0,2})?/" type="number" step="0.000000001" class="input" name="marine_cost_per_ton" autocomplete="off" placeholder="Enter Marine Cost per ton" v-model="form_data.marine_cost_per_ton">
+							</div>
+							<div class="group bordered">
+								<label for="marine_cost_per_ton">Marine Cost per ton in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</label>
+								<input @keyup="convertSelectedCurrency('marine_cost_per_ton', selected_rates, 'local_marine_cost_per_ton', 'usd')" type="number" step="0.000000001" class="input" name="marine_cost_per_ton" autocomplete="off" :placeholder="`Enter Marine Cost per ton in ${form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency'}`" v-model="form_data.local_marine_cost_per_ton">
 							</div>
 						</div>
 						<div class="group_inline two">
-							<ValidationProvider tag="div" class="group bordered" name="Waste Cost per ton" :rules="{ required: true }" v-slot="{ errors }">
-								<label for="waste_cost_per_ton">Waste Cost per ton *</label>
-								<input type="decimal" class="input" name="waste_cost_per_ton" autocomplete="off" placeholder="Enter Waste Cost per ton" v-model="form_data.waste_cost_per_ton">
-								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-							</ValidationProvider>
-							<div class="group viewing">
-								<label for="">Waste Cost per ton in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</label>
-								<div class="field-input">
-									= {{ form_data.currency_symbol }} {{ convertCurrency(selected_rates, form_data.waste_cost_per_ton) }}
-								</div>
+							<div class="group bordered">
+								<label for="waste_cost_per_ton">Waste Cost per ton</label>
+								<input @keyup="convertSelectedCurrency('local_waste_cost_per_ton', selected_rates, 'waste_cost_per_ton')" type="number" step="0.000000001" class="input" name="waste_cost_per_ton" autocomplete="off" placeholder="Enter Waste Cost per ton" v-model="form_data.waste_cost_per_ton">
+							</div>
+							<div class="group bordered">
+								<label for="waste_cost_per_ton">Waste Cost per ton in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</label>
+								<input @keyup="convertSelectedCurrency('waste_cost_per_ton', selected_rates, 'local_waste_cost_per_ton', 'usd')" type="number" step="0.000000001" class="input" name="waste_cost_per_ton" autocomplete="off" :placeholder="`Enter Waste Cost per ton in ${form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency'}`" v-model="form_data.local_waste_cost_per_ton">
 							</div>
 						</div>
 						<div class="group_inline two">
 							<ValidationProvider tag="div" class="group bordered" name="Marine Pollution Cost" :rules="{ required: true }" v-slot="{ errors }">
 								<label for="marine_pollution">Marine Pollution Cost *</label>
-								<input type="decimal" class="input" name="marine_pollution" autocomplete="off" placeholder="Enter Marine Pollution Cost" v-model="form_data.marine_pollution">
+								<input @keyup="convertSelectedCurrency('local_marine_pollution', selected_rates, 'marine_pollution')" type="number" step="0.000000001" class="input" name="marine_pollution" autocomplete="off" placeholder="Enter Marine Pollution Cost" v-model="form_data.marine_pollution">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
-							<div class="group viewing">
-								<label for="">Marine Pollution Cost in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</label>
-								<div class="field-input">
-									= {{ form_data.currency_symbol }} {{ convertCurrency(selected_rates, form_data.marine_pollution) }}
-								</div>
+							<div class="group bordered">
+								<label for="marine_pollution">Marine Pollution Cost in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</label>
+								<input @keyup="convertSelectedCurrency('marine_pollution', selected_rates, 'local_marine_pollution', 'usd')" type="number" step="0.000000001" class="input" name="marine_pollution" autocomplete="off" :placeholder="`Enter Marine Pollution Cost in ${form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency'}`" v-model="form_data.local_marine_pollution">
 							</div>
 						</div>
 						<div class="group_inline two">
 							<ValidationProvider tag="div" class="group bordered" name="Waste Management Cost" :rules="{ required: true }" v-slot="{ errors }">
 								<label for="waste_management">Waste Management Cost *</label>
-								<input type="decimal" class="input" name="waste_management" autocomplete="off" placeholder="Enter Waste Management Cost" v-model="form_data.waste_management">
+								<input @keyup="convertSelectedCurrency('local_waste_management', selected_rates, 'waste_management')" type="number" step="0.000000001" class="input" name="waste_management" autocomplete="off" placeholder="Enter Waste Management Cost" v-model="form_data.waste_management">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
-							<div class="group viewing">
-								<label for="">Waste Management Cost in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</label>
-								<div class="field-input">
-									= {{ form_data.currency_symbol }} {{ convertCurrency(selected_rates, form_data.waste_management) }}
-								</div>
+							<div class="group bordered">
+								<label for="waste_management">Waste Management Cost in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</label>
+								<input @keyup="convertSelectedCurrency('waste_management', selected_rates, 'local_waste_management', 'usd')" type="number" step="0.000000001" class="input" name="waste_management" autocomplete="off" :placeholder="`Enter Waste Management Cost in ${form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency'}`" v-model="form_data.local_waste_management">
 							</div>
 						</div>
 						<div class="group_inline two">
 							<ValidationProvider tag="div" class="group bordered" name="Partial Cost" :rules="{ required: true }" v-slot="{ errors }">
 								<label for="partial_cost">Partial Cost *</label>
-								<input type="decimal" class="input" name="partial_cost" autocomplete="off" placeholder="Enter Partial Cost" v-model="form_data.partial_cost">
+								<input @keyup="convertSelectedCurrency('local_partial_cost', selected_rates, 'partial_cost')" type="number" step="0.000000001" class="input" name="partial_cost" autocomplete="off" placeholder="Enter Partial Cost" v-model="form_data.partial_cost">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
-							<div class="group viewing">
-								<label for="">Partial Cost in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</label>
-								<div class="field-input">
-									= {{ form_data.currency_symbol }} {{ convertCurrency(selected_rates, form_data.partial_cost) }}
-								</div>
+							<div class="group bordered">
+								<label for="partial_cost">Partial Cost in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</label>
+								<input @keyup="convertSelectedCurrency('partial_cost', selected_rates, 'local_partial_cost', 'usd')" type="number" step="0.000000001" class="input" name="partial_cost" autocomplete="off" :placeholder="`Enter Partial Cost in ${form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency'}`" v-model="form_data.local_partial_cost">
 							</div>
 						</div>
 					</div>
@@ -342,19 +328,28 @@
 				csr_local_examples: null,
 				csr_policy: null,
 				acknowledgement: null,
-				marine_pollution: null,
-				waste_management: null,
 				cigarettes_consumed: null,
 				cigarettes_consumed_unit: null,
 				economic_cost: null,
 				economic_cost_currency: null,
 				cigarettes_sticks: null,
-				marine_cost_per_ton: null,
-				waste_cost_per_ton: null,
-				partial_cost: null,
 				company: [],
 				company_sequence: [],
 				reference: [],
+
+				// usd only
+				marine_cost_per_ton: null,
+				waste_cost_per_ton: null,
+				marine_pollution: null,
+				waste_management: null,
+				partial_cost: null,
+
+				// local currency
+				local_marine_cost_per_ton: null,
+				local_waste_cost_per_ton: null,
+				local_marine_pollution: null,
+				local_waste_management: null,
+				local_partial_cost: null,
 			},
 			companies: [],
 			rates: [],
@@ -383,7 +378,7 @@
 				const me = this
 				me.$refs.form.validate().then(success => {
 					if (!success) {
-						me.validateWysiwyg(me, ['csr_policy', 'csr_local_examples', 'acknowledgement'])
+						me.validateWysiwyg(me, ['csr_local_examples'])
 						me.validateWysiwyg(me, ['reference'], true)
 						me.$scrollTo('.validate', {
 							offset: -250
@@ -401,17 +396,17 @@
 						form_data.append('region', me.form_data.region)
 						form_data.append('death', me.form_data.death)
 						form_data.append('csr_local_examples', me.form_data.csr_local_examples)
-						form_data.append('csr_policy', me.form_data.csr_policy)
-						form_data.append('acknowledgement', me.form_data.acknowledgement)
+						form_data.append('csr_policy', me.form_data.csr_policy != null && me.form_data.csr_policy != "" ? me.form_data.csr_policy : '')
+						form_data.append('acknowledgement', me.form_data.acknowledgement != null && me.form_data.acknowledgement != "" ? me.form_data.acknowledgement : '')
 						form_data.append('marine_pollution', me.form_data.marine_pollution)
 						form_data.append('waste_management', me.form_data.waste_management)
 						form_data.append('cigarettes_consumed', me.form_data.cigarettes_consumed)
-						form_data.append('cigarettes_consumed_unit', me.form_data.cigarettes_consumed_unit)
+						form_data.append('cigarettes_consumed_unit', me.form_data.cigarettes_consumed_unit != null && me.form_data.cigarettes_consumed_unit != "" ? me.form_data.cigarettes_consumed_unit : '')
 						form_data.append('economic_cost', me.form_data.economic_cost)
-						form_data.append('economic_cost_currency', me.form_data.economic_cost_currency)
-						form_data.append('cigarettes_sticks', me.form_data.cigarettes_sticks)
-						form_data.append('marine_cost_per_ton', me.form_data.marine_cost_per_ton)
-						form_data.append('waste_cost_per_ton', me.form_data.waste_cost_per_ton)
+						form_data.append('economic_cost_currency', me.form_data.economic_cost_currency != null && me.form_data.economic_cost_currency != "" ? me.form_data.economic_cost_currency : '')
+						form_data.append('cigarettes_sticks', me.form_data.cigarettes_sticks != null && me.form_data.cigarettes_sticks != "" ? me.form_data.cigarettes_sticks : '')
+						form_data.append('marine_cost_per_ton', me.form_data.marine_cost_per_ton != null && me.form_data.marine_cost_per_ton != "" ? me.form_data.marine_cost_per_ton : '')
+						form_data.append('waste_cost_per_ton', me.form_data.waste_cost_per_ton != null && me.form_data.waste_cost_per_ton != "" ? me.form_data.waste_cost_per_ton : '')
 						form_data.append('partial_cost', me.form_data.partial_cost)
 
 						me.form_data.company.forEach((item, index) => {
@@ -456,7 +451,48 @@
 			setDefaultCurrency() {
 				const me  = this
 				me.selected_rates = me.form_data.currency != null ? me.form_data.currency.amount : 1
+				setTimeout(() => {
+					me.convertAllAmount()
+				}, 200)
 			},
+			convertAllAmount() {
+				const me = this
+				me.convertSelectedCurrency('local_marine_cost_per_ton', me.selected_rates, 'marine_cost_per_ton')
+				me.convertSelectedCurrency('local_waste_cost_per_ton', me.selected_rates, 'waste_cost_per_ton')
+				me.convertSelectedCurrency('local_marine_pollution', me.selected_rates, 'marine_pollution')
+				me.convertSelectedCurrency('local_waste_management', me.selected_rates, 'waste_management')
+				me.convertSelectedCurrency('local_partial_cost', me.selected_rates, 'partial_cost')
+			},
+			convertSelectedCurrency(value, currency_rate, to_convert, type = 'local') {
+				const me = this
+				var converted = 0
+				switch (type) {
+					case 'local':
+						if (me.form_data[to_convert] != undefined) {
+							if (me.form_data[to_convert] != null && me.form_data[to_convert] != '') {
+								converted = Number(me.form_data[to_convert]) * Number(currency_rate)
+				
+								me.form_data[value] = Math.round(Number(converted.toString().match(/^\d+(?:\.\d{0,2})?/)))
+							}
+							else {
+								me.form_data[value] = null
+							}
+						}
+						break;
+					case 'usd':
+						if (me.form_data[to_convert] != undefined) {
+							if (me.form_data[to_convert] != null && me.form_data[to_convert] != '') {
+								converted = Number(me.form_data[to_convert]) / Number(currency_rate)
+				
+								me.form_data[value] = Number(converted.toString().match(/^\d+(?:\.\d{0,2})?/))
+							}
+							else {
+								me.form_data[value] = null
+							}
+						}
+						break;
+				}
+			}
 		},
 		mounted () {
 			const me = this
