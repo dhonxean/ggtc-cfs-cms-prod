@@ -89,7 +89,7 @@
 		},
 		methods: {
 			removeTempFiles (unique) {
-					data_transfer = new DataTransfer(),
+					const data_transfer = new DataTransfer(),
 					target_file = document.getElementById(`files${this.unique}`),
 					{ files } = target_file
 
