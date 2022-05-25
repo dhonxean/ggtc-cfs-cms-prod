@@ -175,7 +175,7 @@
 						csr_local_examples: res.csr_local_examples != null ? res.csr_local_examples : '',
 						csr_acknowledgement: res.csr_acknowledgement != null ? res.csr_acknowledgement : '',
 					}
-					return $axios.$post('v2/admin/language/get-all-language?all=true').then(({ res }) => {
+					return $axios.$post('v2/admin/language/get-all-language?all=true&exclude_english=1').then(({ res }) => {
 						return {
 							languages: res,
 							country: country,

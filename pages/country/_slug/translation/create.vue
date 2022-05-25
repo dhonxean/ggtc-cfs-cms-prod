@@ -162,7 +162,7 @@
 			store.commit('global/settings/populateTitle', { title: 'Country' })
 			return $axios.$get(`v1/admin/country/info/${params.slug}`).then(({ res }) => {
 				let country = res
-				return $axios.$post('v2/admin/language/get-all-language?all=true').then(({ res }) => {
+				return $axios.$post('v2/admin/language/get-all-language?all=true&exclude_english=1').then(({ res }) => {
 					return {
 						languages: res,
 						country: country
