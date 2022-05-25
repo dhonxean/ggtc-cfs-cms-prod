@@ -161,7 +161,6 @@
 		},
 		mounted () {
 			const me = this
-			console.log(me.records)
 			me.toggleModalStatus({ type: 'loader', status: true })
 			setTimeout( () => {
 				me.toggleModalStatus({ type: 'loader', status: false })
