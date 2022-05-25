@@ -27,14 +27,18 @@
 						<template v-for="(item, key) in default_data">
 							<div class="group_inline two" :key="key">
 								<validation-provider tag="div" :name="humanize('validation', key)" :rules="{ required: (res.static_translation && res.static_translation.is_default) ? true : false }" v-slot="{ errors }" class="group bordered">
-								<label>{{ humanize('label', key) }} {{ (res.static_translation && res.static_translation.is_default) ? '*' : '' }}</label>
-								<textarea :name="key" class="input" rows="1" v-model="form_data[key] = default_data[key]"></textarea>
-								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+									<label>{{ humanize('label', key) }} {{ (res.static_translation && res.static_translation.is_default) ? '*' : '' }}</label>
+									<textarea :name="key" class="input" rows="5" v-model="form_data[key]"></textarea>
+									<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 								</validation-provider>
 								<div class="group viewing">
-								<div class="field-input pt20">
-									{{ item }}
-								</div>
+									<div class="field-input inline pt20">
+										<span>{{ item }}</span>
+										<div class="success button pointer">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+											<span>View this part</span>
+										</div>
+									</div>
 								</div>
 							</div>
 						</template>
