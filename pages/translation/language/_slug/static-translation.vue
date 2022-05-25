@@ -26,8 +26,8 @@
 						</div>
             <template v-for="(item, key) in default_data">
               <div class="group_inline two" :key="key">
-                <validation-provider tag="div" name="header title" :rules="{ required: (res.static_translation && res.static_translation.is_default) ? true : false }" v-slot="{ errors }" class="group bordered">
-                  <label>{{ key }} {{ (res.static_translation && res.static_translation.is_default) ? '*' : '' }}</label>
+                <validation-provider tag="div" :name="humanize('validation', key)" :rules="{ required: (res.static_translation && res.static_translation.is_default) ? true : false }" v-slot="{ errors }" class="group bordered">
+                  <label>{{ humanize('label', key) }} {{ (res.static_translation && res.static_translation.is_default) ? '*' : '' }}</label>
                   <textarea :name="key" class="input" rows="1" v-model="form_data[key]"></textarea>
                   <transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
                 </validation-provider>
@@ -55,6 +55,20 @@
 	export default {
     mixins: [staticTranslation],
 		methods: {
+      humanize (type, identifier) {
+        let result = ''
+
+        switch (type) {
+          case 'label':
+            result = identifier.split('_').join(' ').toUpperCase()
+            break
+          case 'validation':
+            result = identifier.split('_').join(' ').toLowerCase()
+            break
+        }
+
+        return result
+      },
 			submit () {
 				const me = this
 				me.$refs.form.validate().then(success => {
