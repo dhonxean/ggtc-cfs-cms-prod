@@ -119,20 +119,22 @@
 		asyncData ({ $axios, store, error, params }) {
 			store.commit('global/settings/populateTitle', { title: 'Language' })
 
-			return $axios.$get(`v2/admin/static-translation/info/${params.slug}?type=language_id`).then(({ res }) => {
-				if (res.static.static_translation != null) {
+			return $axios.$get(`v2/admin/static-translation/info/${params.slug}?type=language_id`).then(({ res: { sttc, dflt } }) => {
+				if (sttc.static_translation != null) {
 					let form_data = {}
-					Object.keys(res.static.static_translation.content_fields).forEach(key => {
-						form_data[key] = res.static.static_translation.content_fields[key]
+					Object.keys(sttc.static_translation.content_fields).forEach(key => {
+						form_data[key] = sttc.static_translation.content_fields[key]
 					})
 					return {
-						res: res.static,
+						res: sttc,
+            default_data: dflt.content_fields,
 						form_data: form_data
 					}
 				}
 				else {
 					return {
-						res: res.static
+						res: sttc,
+            default_data: dflt.content_fields
 					}
 				}
 
