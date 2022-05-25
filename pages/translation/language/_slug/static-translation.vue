@@ -729,10 +729,43 @@
 				million: "Million",
 				trillion: "Trillion",
 				link_copied: "Link Copied",
+				show_less: "Show Less",
+				show_more: "Show More",
+				back_to_main_site: "BACK TO MAIN SITE",
+				search_country: "Search Country",
+				no_country_found: "No Country Found.",
 
 				// popup modals
 				curing_popup: "Annually, an estimated 11.4 million metric tons of wood are required for tobacco curing. Together, tobacco cultivation and curing account for 5% of global deforestation.",
+				cultivation_popup: "Tobacco causes soil erosion because it is usually planted as a single or monocrop, leaving the topsoil poorly protected from wind and water. With 90% of all tobacco-producing land on the continent, the Miombo ecosystem is a global hotspot for tobacco-related deforestation. ",
+				processing_popup: "Tobacco manufacturing is the most environmentally damaging step of tobacco production and involves high environmental costs incurred due to the use of large amounts of energy, water and other resources, toxic chemicals, greenhouse gases emitted, and other waste generated.",
+				disposal_popup: "Cigarette butts, by far, are the most littered items on earth. Tobacco product packaging also yields 2 million tons of solid waste annually, in addition to all other tobacco product waste.",
+				distribution_popup: "In addition to extensive transportation costs, finished packs of cigarettes are usually delivered to their point of sale usually via diesel-driven trucks- diesel gas is a known carcinogen.",
+				use_popup: "Tobacco smoke emits thousands of metric tons of toxicants like formaldehyde, nicotine and three major greenhouse gases- carbon dioxide, methane, and nitrous oxides.",
+				marine_pollution_popup_p_1: "Marine Pollution or “ecosystem cost over the lifetime of the plastic” refers to the loss of the benefit of ecosystems to humans such as support of food chain, animal or plant harvest, provision of scenic views, hence this involves economic value derived from tourism and aquaculture, among others.",
+				marine_pollution_popup_p_2: "For simplicity, the median ofUSD204,270 and USD408,541 (WWF, 2021) representing the ocean’s ecosystem losses per ton of plastic is used. The amount of tobacco product plastics are based on the volume of consumption (Tobacco Atlas, 2018) multiplied by the estimated weight of plastic packaging components and cigarette butts. The amount of plastics leaking into the ocean was adopted from OECD’s Global Plastics Outlook 2022, taking into consideration the higher estimates based on beach clean-up data.",
+				waste_management_popup: `The current cost of waste management is the volume of tobacco product waste based on consumption volume <a href="https://files.tobaccoatlas.org/wp-content/uploads/2018/03/TobaccoAtlas_6thEdition_LoRes.pdf" target="_blank">(Tobacco Atlas, 2018)</a> multiplied by the World Bank-projected waste management costs: LIC (x) LMIC (x) UMIC (x) HIC (USD340 per ton, 98%) The percentage refers to collection efficiency. To generate the projected expense to collect the fraction that remains to be collected. The volume of tobacco packaging and cigarette butts is multiplied by a higher cost, an annualized “benchmark cost” estimated by <a href="https://www.oecd.org/publications/the-cost-of-preventing-ocean-plastic-pollution-5c41963b-en.htm" target="_blank">OECD WD, 2022</a>.`,
+				partial_cost_popup: `Marine Pollution Cost per year is added to the Waste Management Cost per year. Marine Pollution costs represent ecosystem losses that, according to WWF, are likely underestimated. Waste Management costs represent the current cost of the collection plus the anticipated cost of collecting the fraction of waste that remains uncollected. Costs are estimated based on country reporting (<a href="https://datatopics.worldbank.org/what-a-waste/" target="_blank">World Bank, OECD</a>), but for countries where data are unavailable, estimates based on income classification are used.`,
+				
+				// threat to environment section
+				threat_title: "Tobacco: Threat to the Environment",
+				threat_p_1: "Tobacco products damage the environment at every stage of their lifecycle:",
+				threat_p_2: "Clearing lands and burning plant residues lead to <b>deforestation</b>, while agrochemicals/pesticides pollute waterways and poison fishes.",
+				threat_p_3: "Burning firewood to cure leaves causes deforestation and <b>water scarcity.</b>",
+				threat_p_4: "Processes involve use of toxic chemicals, and emission of <b>greenhouse gases</b> & other waste.",
+				threat_p_5: "Greenhouse gases are emitted during transport.",
+				threat_p_6: "Toxic residue from tobacco smoke lingers in the environment ( <b>indoor particulate matter</b> concentrations are 10x higher than diesel car exhausts).",
+				threat_p_7: "Cigarettes are also the most common cause of <b>accidental fires</b> and toxic <b>third hand smoke</b> materials pollute the environment.",
+				threat_p_8: "Cigarette butts are some of the most littered items on earth and tobacco product packaging yields 2 million <b>tons of solid waste annually.</b>",
+				threat_p_9: "Over 1/3 of cigarette butt litter wind up in the oceans and <b>19-38% of total debris</b> in ocean clean-ups are cigarette butts.",
+				threat_p_10: "Environmental toxins leach from butts inducing <b>long term harm to marine life.",
 
+				// cost estimation
+				cost_per_year: "per_year",
+				cost_sub_title: "On Marine Pollution and Waste Management",
+				
+				cost_explanation_p_1: "The Marine Pollution & Waste Management Costs of Tobacco Product Packaging and Cigarette Butts represent a conservative estimate of some quantifiable impact of tobacco product waste, a small part of the overall environmental damage.",
+				cost_explanation_p_1: "Marine Pollution or “ecosystem cost over the lifetime of the plastic” is based on the plastic content of tobacco packages and filters but does not account for the latter’s hazardous nature. (WWF Est: USD204,270-408,541USD/ton)",
 
 				// cigarettes_consumed: "Cigarettes Consumed",
 				// waste_management_costs: "Waste Management Costs",
