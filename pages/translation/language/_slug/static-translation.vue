@@ -51,7 +51,6 @@
 
 <script>
   import staticTranslation from '~/plugins/translation/static-translation.js'
-
 	export default {
     mixins: [staticTranslation],
 		methods: {
@@ -68,9 +67,9 @@
 						let form_data = new FormData()
 						let api = ''
 						me.form_data.language_id = me.res.id
-            api = (me.res.static_translation != null)
-              ? `v2/admin/static-translation/update/${me.res.static_translation.id}`
-              : `v2/admin/static-translation/create`
+						api = (me.res.static_translation != null)
+							? `v2/admin/static-translation/update/${me.res.static_translation.id}`
+							: `v2/admin/static-translation/create`
 
 						me.$axios.post(api, me.form_data).then(res => {
 							me.$store.dispatch('global/toast/addToast', { type: 'success', message: 'Item has been updated!' })
