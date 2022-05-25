@@ -60,20 +60,20 @@
 	export default {
     mixins: [staticTranslation],
 		methods: {
-      humanize (type, identifier) {
-        let result = ''
+			humanize (type, identifier) {
+				let result = ''
 
-        switch (type) {
-          case 'label':
-            result = identifier.split('_').join(' ').toUpperCase()
-            break
-          case 'validation':
-            result = identifier.split('_').join(' ').toLowerCase()
-            break
-        }
+				switch (type) {
+				case 'label':
+					result = identifier.split('_').join(' ').toUpperCase()
+					break
+				case 'validation':
+					result = identifier.split('_').join(' ').toLowerCase()
+					break
+				}
 
-        return result
-      },
+				return result
+			},
 			submit () {
 				const me = this
 				me.$refs.form.validate().then(success => {
@@ -120,19 +120,19 @@
 			store.commit('global/settings/populateTitle', { title: 'Language' })
 
 			return $axios.$get(`v2/admin/static-translation/info/${params.slug}?type=language_id`).then(({ res }) => {
-				if (res.static_translation != null) {
+				if (res.static.static_translation != null) {
 					let form_data = {}
-					Object.keys(res.static_translation.content_fields).forEach(key => {
-						form_data[key] = res.static_translation.content_fields[key]
+					Object.keys(res.static.static_translation.content_fields).forEach(key => {
+						form_data[key] = res.static.static_translation.content_fields[key]
 					})
 					return {
-						res: res,
+						res: res.static,
 						form_data: form_data
 					}
 				}
 				else {
 					return {
-						res: res
+						res: res.static
 					}
 				}
 
