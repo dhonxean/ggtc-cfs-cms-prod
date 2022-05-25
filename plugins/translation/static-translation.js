@@ -57,7 +57,17 @@ export default {
       cost_sub_title: "On Marine Pollution and Waste Management",
 
       cost_explanation_p_1: "The Marine Pollution & Waste Management Costs of Tobacco Product Packaging and Cigarette Butts represent a conservative estimate of some quantifiable impact of tobacco product waste, a small part of the overall environmental damage.",
-      cost_explanation_p_1: "Marine Pollution or “ecosystem cost over the lifetime of the plastic” is based on the plastic content of tobacco packages and filters but does not account for the latter’s hazardous nature. (WWF Est: USD204,270-408,541USD/ton)",
+      cost_explanation_p_2: "Marine Pollution or “ecosystem cost over the lifetime of the plastic” is based on the plastic content of tobacco packages and filters but does not account for the latter’s hazardous nature. (WWF Est: USD204,270-408,541USD/ton)",
+      cost_explanation_p_3: "Waste management or “municipal solid waste management cost” includes collection, recycling, energy recovery, and landfill/ dumpsite. (World Bank) Current costs may or may not include litter management, which is likely significant because tobacco product waste accounts for 25%-40% of all global litter. Since not all waste is currently collected, the cost of managing the balance of the waste is added. For this, “benchmark costs” (OECD 2022) are used.",
+      cost_added_harms: "Added to environmental harms are",
+      deaths: "Deaths",
+      and: "and",
+      far_more: "FAR MORE",
+      each_year: "each year",
+      in: "in",
+      economic_losses: "economic_losses",
+      consuming: "consuming",
+      sticks: "Sticks ",
 
       // cigarettes_consumed: "Cigarettes Consumed",
       // waste_management_costs: "Waste Management Costs",
