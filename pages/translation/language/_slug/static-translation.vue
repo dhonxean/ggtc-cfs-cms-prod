@@ -24,26 +24,26 @@
 								<label class="label l">English Translation</label>
 							</div>
 						</div>
-            <template v-for="(item, key) in default_data">
-              <div class="group_inline two" :key="key">
-                <validation-provider tag="div" :name="humanize('validation', key)" :rules="{ required: (res.static_translation && res.static_translation.is_default) ? true : false }" v-slot="{ errors }" class="group bordered">
-                  <label>{{ humanize('label', key) }} {{ (res.static_translation && res.static_translation.is_default) ? '*' : '' }}</label>
-                  <textarea :name="key" class="input" rows="5" v-model="form_data[key]"></textarea>
-                  <transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
-                </validation-provider>
-                <div class="group viewing">
-                  <div class="field-input pt20">
-                    <span>{{ item }}</span>
-                    <div>
-                      <div class="success button pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        <span>View this part</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </template>
+						<template v-for="(item, key) in default_data">
+							<div class="group_inline two" :key="key">
+								<validation-provider tag="div" :name="humanize('validation', key)" :rules="{ required: (res.static_translation && res.static_translation.is_default) ? true : false }" v-slot="{ errors }" class="group bordered">
+									<label>{{ humanize('label', key) }} {{ (res.static_translation && res.static_translation.is_default) ? '*' : '' }}</label>
+									<textarea :name="key" class="input" rows="5" v-model="form_data[key]"></textarea>
+									<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
+								</validation-provider>
+								<div class="group viewing">
+									<div class="field-input pt20">
+										<span>{{ item }}</span>
+										<div>
+											<div class="success button pointer">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+												<span>View this part</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</template>
 					</div>
 				</div>
 				<div class="buttons fixed">
@@ -91,6 +91,12 @@
 							? `v2/admin/static-translation/update/${me.res.static_translation.id}`
 							: `v2/admin/static-translation/create`
 
+						Object.keys(me.form_data).forEach(key => {
+							if (!me.form_data[key]) {
+								me.form_data[key] = me.default_data[key]
+							}
+						})
+
 						me.$axios.post(api, me.form_data).then(res => {
 							me.$store.dispatch('global/toast/addToast', { type: 'success', message: 'Item has been updated!' })
 							me.$nuxt.refresh()
@@ -132,9 +138,14 @@
 					}
 				}
 				else {
+					let form_data = {}
+					Object.keys(dflt.content_fields).forEach(key => {
+						form_data[key] = ''
+					})
 					return {
 						res: sttc,
-            default_data: dflt.content_fields
+            default_data: dflt.content_fields,
+						form_data: form_data
 					}
 				}
 

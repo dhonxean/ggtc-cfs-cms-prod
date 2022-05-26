@@ -28,6 +28,7 @@ export default {
       no_country_found: "No Country Found.",
 
       // popup modals
+      popup_title: 'Pop ups',
       curing_popup: "Annually, an estimated 11.4 million metric tons of wood are required for tobacco curing. Together, tobacco cultivation and curing account for 5% of global deforestation.",
       cultivation_popup: "Tobacco causes soil erosion because it is usually planted as a single or monocrop, leaving the topsoil poorly protected from wind and water. With 90% of all tobacco-producing land on the continent, the Miombo ecosystem is a global hotspot for tobacco-related deforestation. ",
       processing_popup: "Tobacco manufacturing is the most environmentally damaging step of tobacco production and involves high environmental costs incurred due to the use of large amounts of energy, water and other resources, toxic chemicals, greenhouse gases emitted, and other waste generated.",
