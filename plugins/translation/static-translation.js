@@ -53,7 +53,7 @@ export default {
       threat_p_10: "Environmental toxins leach from butts inducing <b>long term harm to marine life.",
 
       // cost estimation
-      cost_per_year: "per_year",
+      cost_per_year: "per year",
       cost_sub_title: "On Marine Pollution and Waste Management",
 
       cost_explanation_p_1: "The Marine Pollution & Waste Management Costs of Tobacco Product Packaging and Cigarette Butts represent a conservative estimate of some quantifiable impact of tobacco product waste, a small part of the overall environmental damage.",
@@ -65,8 +65,9 @@ export default {
       cost_far_more: "FAR MORE",
       cost_each_year: "each year",
       cost_in: "in",
-      cost_economic_losses: "economic_losses",
+      cost_economic_losses: "ECONOMIC LOSSES",
       cost_consuming: "consuming",
+      cost_from: "from",
       cost_sticks: "Sticks",
       cost_produced_mainly_by: "produced mainly by",
 
