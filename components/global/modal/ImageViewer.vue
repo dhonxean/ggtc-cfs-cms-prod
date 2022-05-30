@@ -6,7 +6,6 @@
 					<div class="image_popup_wrapper">
 						<div class="image_popup_image_container">
 							<div class="image">
-								{{ getItem.path }}
 								<img :src="`/static-translation/sections/${getItem.path}.png`" alt="">
 							</div>
 						</div>
@@ -58,7 +57,7 @@
 			transition: all .3s ease
 			.image_popup_content
 				transition: all .3s ease
-				padding: 60px 0
+				padding: 60px 50px
 				position: absolute
 				top: 0
 				left: 0
