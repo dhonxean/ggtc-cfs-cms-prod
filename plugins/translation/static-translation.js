@@ -104,6 +104,212 @@ export default {
 
       // acknowledgement
       acknowledgement_title: 'Acknowledgement',
+    },
+    static_translation_options: {
+      cultivation: {
+        label_desc: 'Maximum of 8 characters, if exceeded it will cut the text and add elipsis',
+        textarea_size: '1',
+      },
+      curing: {
+        label_desc: 'Maximum of 7 characters, if exceeded it will cut the text and add elipsis',
+        textarea_size: '1',
+      },
+      process_manufacturing: {
+        label_desc: 'Maximum of 23 characters, if exceeded it will cut the text and add elipsis',
+        textarea_size: '1',
+      },
+      distribution: {
+        label_desc: 'Maximum of 10 characters, if exceeded it will cut the text and add elipsis',
+        textarea_size: '1',
+      },
+      use: {
+        label_desc: 'Maximum of 7 characters, if exceeded it will cut the text and add elipsis',
+        textarea_size: '1',
+      },
+      disposal: {
+        label_desc: 'Maximum of 10 characters, if exceeded it will cut the text and add elipsis',
+        textarea_size: '1',
+      },
+      waste_management: {
+        label_desc: 'Maximum of 18 characters, if exceeded it will cut the text and add elipsis',
+        textarea_size: '1',
+      },
+      marine_pollution: {
+        label_desc: 'Maximum of 18 characters, if exceeded it will cut the text and add elipsis',
+        textarea_size: '1',
+      },
+      curing_popup: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      cultivation_popup: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      processing_popup: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      disposal_popup: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      distribution_popup: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      use_popup: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      marine_pollution_popup_p_1: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      marine_pollution_popup_p_2: {
+        label_desc: '',
+        textarea_size: 8,
+      },
+      waste_management_popup: {
+        label_desc: '',
+        textarea_size: 13,
+      },
+      partial_cost_popup: {
+        label_desc: '',
+        textarea_size: 8,
+      },
+      threat_p_2: {
+        label_desc: '',
+        textarea_size: 2,
+      },
+      threat_p_3: {
+        label_desc: '',
+        textarea_size: 2,
+      },
+      threat_p_4: {
+        label_desc: '',
+        textarea_size: 2,
+      },
+      threat_p_5: {
+        label_desc: '',
+        textarea_size: 2,
+      },
+      threat_p_6: {
+        label_desc: '',
+        textarea_size: 2,
+      },
+      threat_p_7: {
+        label_desc: '',
+        textarea_size: 2,
+      },
+      threat_p_8: {
+        label_desc: '',
+        textarea_size: 2,
+      },
+      threat_p_9: {
+        label_desc: '',
+        textarea_size: 2,
+      },
+      threat_p_10: {
+        label_desc: '',
+        textarea_size: 2,
+      },
+      cost_explanation_p_1: {
+        label_desc: '',
+        textarea_size: 4,
+      },
+      cost_explanation_p_2: {
+        label_desc: '',
+        textarea_size: 3,
+      },
+      cost_explanation_p_3: {
+        label_desc: '',
+        textarea_size: 7,
+      },
+      tobacco_industry_p_1: {
+        label_desc: '',
+        textarea_size: 8,
+      },
+      tobacco_industry_p_2: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      recommendations_p_1: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      recommendations_p_2: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      recommendations_item_1: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      recommendations_item_2: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      recommendations_item_3: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      recommendations_item_4: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      recommendations_item_5: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      recommendations_item_6: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      references_item_1: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      references_item_2: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      references_item_3: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      references_item_4: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      references_item_5: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      references_item_6: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      references_item_7: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      references_item_8: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      references_item_9: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      references_item_10: {
+        label_desc: '',
+        textarea_size: 5,
+      },
+      references_item_11: {
+        label_desc: '',
+        textarea_size: 5,
+      },
     }
   })
 }

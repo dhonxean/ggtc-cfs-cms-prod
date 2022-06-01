@@ -27,8 +27,12 @@
 						<template v-for="(item, key) in default_data">
 							<div class="group_inline two" :key="key">
 								<validation-provider tag="div" :name="humanize('validation', key)" :rules="{ required: (res.static_translation && res.static_translation.is_default) ? true : false }" v-slot="{ errors }" class="group bordered">
-									<label>{{ humanize('label', key) }} {{ (res.static_translation && res.static_translation.is_default) ? '*' : '' }}</label>
-									<textarea :name="key" class="input" rows="5" v-model="form_data[key]"></textarea>
+									<label>
+										{{ humanize('label', key) }} 
+										{{ (res.static_translation && res.static_translation.is_default) ? '*' : '' }}
+										{{ static_translation_options[key] ? (static_translation_options[key].label_desc != '' ? `(${static_translation_options[key].label_desc})` : '') : '' }}
+									</label>
+									<textarea :name="key" class="input" :rows="static_translation_options[key] ? static_translation_options[key].textarea_size  : 1" v-model="form_data[key]"></textarea>
 									<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 								</validation-provider>
 								<div class="group viewing">
