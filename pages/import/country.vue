@@ -50,7 +50,7 @@
 						let form_data = new FormData(document.getElementById('form'))
 						form_data.append('type', 'country')
 
-						me.$axios.post('admin/import/country', form_data).then(res => {
+						me.$axios.post('v1/admin/import/country', form_data).then(res => {
 							me.$store.dispatch('global/toast/addToast', { type: 'success', message: 'Data Imported Successfully!' })
 						}).catch(err => {
 							me.toggleModalStatus({ type: 'catcher', status: true, item: { errors: err.response.data.errors } })
