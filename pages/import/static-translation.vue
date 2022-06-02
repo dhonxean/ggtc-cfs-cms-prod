@@ -48,17 +48,12 @@
 						me.toggleModalStatus({ type: 'loader', status: true })
 
 						let form_data = new FormData(document.getElementById('form'))
-						form_data.append('type', 'country')
 
-						me.$axios.post('v1/admin/import/country', form_data).then(res => {
+						me.$axios.post('v2/admin/static-translation/import-language-static-translation', form_data).then(res => {
 							me.$store.dispatch('global/toast/addToast', { type: 'success', message: 'Data Imported Successfully!' })
 						}).catch(err => {
 							me.toggleModalStatus({ type: 'catcher', status: true, item: { errors: err.response.data.errors } })
 						}).then(() => {
-							// me.toggleModalStatus({ type: 'loader', status: false })
-							// setTimeout(() => {
-							// 	location.reload(true)
-							// }, 1000)
 							document.querySelector('.image_close').click()
 							setTimeout(() => {
 								me.toggleModalStatus({ type: 'loader', status: false })
@@ -80,7 +75,7 @@
 			}, 500)
 		},
 		asyncData ({ $axios, store }) {
-			store.commit('global/settings/populateTitle', { title: 'Import Country' })
+			store.commit('global/settings/populateTitle', { title: 'Import Static Translation' })
 
 		}
 	}
