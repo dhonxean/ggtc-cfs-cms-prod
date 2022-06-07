@@ -71,7 +71,7 @@
 				<!-- acknowledgement  -->
 				<div class="box mb">
 					<div class="top_box">
-						<h2>CSR Local Examples</h2>
+						<h2>Acknowledgement</h2>
 					</div>
 					<div class="bottom_box">
 						<div class="group viewing">
