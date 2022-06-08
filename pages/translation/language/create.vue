@@ -61,6 +61,7 @@
 				name: null,
 				code: null,
 			},
+			enabled: false,
 		}),	
 		methods: {
 			submit () {
@@ -94,15 +95,24 @@
 		},
 		mounted () {
 			const me = this
+			if (!me.enabled) {
+				me.$nuxt.error({ statusCode: 404, message: 'Page not found' })
+			}
 			me.toggleModalStatus({ type: 'loader', status: true })
 			setTimeout( () => {
 				me.toggleModalStatus({ type: 'loader', status: false })
 				me.loaded = true
 			}, 500)
 		},
-		asyncData ({ $axios, store }) {
+		asyncData ({ $axios, store, $auth }) {
+			let enabled = false
+			if ($auth.user.role_id == 1) {
+				enabled = true
+			}
 			store.commit('global/settings/populateTitle', { title: 'Language' })
-
+			return {
+				enabled: enabled
+			}
 		}
 	}
 </script>

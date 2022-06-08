@@ -1,7 +1,7 @@
 <template lang="html">
 	<div id="dashboard" v-if="loaded">
 
-		<div class="actions">
+		<div class="actions" v-if="enabled">
 			<nuxt-link to="/translation/world-country/create" class="success button pointer">
 				<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
 				<span>Add Country</span>
@@ -99,7 +99,7 @@
 								<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" class="icon"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
 								<span>Edit</span>
 							</nuxt-link>
-							<div class="item ml cancel pointer" @click="toggleModalStatus({ type: 'delete_confirmation', status: true, item: { api: `v2/admin/language/delete/${data.id}`, item_type: 'language' } })">
+							<div class="item ml cancel pointer" @click="toggleModalStatus({ type: 'delete_confirmation', status: true, item: { api: `v2/admin/language/delete/${data.id}`, item_type: 'language' } })" v-if="enabled">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" class="icon"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
 								<span>Delete</span>
 							</div>
@@ -138,6 +138,7 @@
 			},
 			has_search: true,
 			records: [],
+			enabled: false,
 		}),
 		methods: {
 			sort_table (sort_name){
@@ -170,15 +171,20 @@
 				me.loaded = true
 			}, 500)
 		},
-		asyncData ({ $axios, store }) {
+		asyncData ({ $axios, store, $auth }) {
 			store.commit('global/settings/populateTitle', { title: 'World Country' })
 			let form_data = {
 				sort_by: 'name',
 				order_type: 'asc'
 			}
+			let enabled = false
+			if ($auth.user.role_id == 1) {
+				enabled = true
+			}
 			return $axios.$post('v2/admin/world-country/get-all-world-country', form_data).then(({ res }) => {
 				return {
-					records: res
+					records: res,
+					enabled: enabled
 				}
 			}).catch(({ response: { data: { errors } } }) => {
 				store.commit('global/modal/toggleModalStatus', { type: 'catcher', status: true, item: { errors: errors } })
