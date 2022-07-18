@@ -5,8 +5,9 @@ export default {
     res: {},
     default_data: {
       header_title: "Country Briefing",
-      dropdown_label: "Choose a Country",
+      dropdown_label: "Choose a country brief",
       download: "Download",
+      download_sub_text: "the Country Brief",
       share_infographics_title: "The estimated cost of tobacco product waste that accumulates in the",
       infographics_title: "How should tobacco companies pay for their pollution in",
       cultivation: "Cultivation",
