@@ -42,7 +42,7 @@
 					this.$store.dispatch('global/toast/addToast', { type: 'success', message: 'Item has been deleted!' })
 					this.$nuxt.refresh()
 				}).catch(err => {
-					this.$store.commit('global/catcher/populateErrors', { items: err.response.data.errors })
+					this.toggleModalStatus({ type: 'catcher', status: true, item: { errors: err.response.data.errors } })
 				}).then(() => {
 					setTimeout( () => {
 						this.toggleModalStatus({ type: 'loader', status: false })

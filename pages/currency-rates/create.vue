@@ -61,7 +61,7 @@
 						form_data.append('name', me.form_data.name)
 						form_data.append('amount', me.form_data.amount)
 
-						me.$axios.post('admin/currency-rate/create', form_data).then(res => {
+						me.$axios.post('v1/admin/currency-rate/create', form_data).then(res => {
 							me.$store.dispatch('global/toast/addToast', { type: 'success', message: 'Item has been added!' })
 							me.$router.push(`/currency-rates/${res.data.res.id}/update`)
 						}).catch(err => {

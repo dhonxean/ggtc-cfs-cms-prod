@@ -39,6 +39,12 @@
 			</template>
 		</transition>
 
+		<transition name="fade">
+			<template v-if="getShowStatus('image_viewer')">
+				<image-viewer />
+			</template>
+		</transition>
+
 		<ul id="toast_wrapper" :class="[ (getToasts > 0) ? '' : 'none' ]"></ul>
 
 	</div>

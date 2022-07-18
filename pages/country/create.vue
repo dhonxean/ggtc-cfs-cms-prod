@@ -419,7 +419,7 @@
 							form_data.append('reference_sequence[]', item.sequence)
 						})
 
-						me.$axios.post('admin/country/create', form_data).then(res => {
+						me.$axios.post('v1/admin/country/create', form_data).then(res => {
 							me.$store.dispatch('global/toast/addToast', { type: 'success', message: 'Item has been added!' })
 							me.$router.push(`/country/${res.data.res.id}/update`)
 						}).catch(err => {
@@ -437,7 +437,7 @@
 			},
 			getCurrency() {
 				const me = this
-				me.$axios.post('admin/currency-rate/get-all-currency?all=true').then(res => {
+				me.$axios.post('v1/admin/currency-rate/get-all-currency?all=true').then(res => {
 					me.rates = res.data.res
 				}).catch(err => {
 					me.toggleModalStatus({ type: 'catcher', status: true, item: { errors: err.response.data.errors } })
@@ -502,7 +502,7 @@
 		asyncData ({ $axios, store }) {
 			store.commit('global/settings/populateTitle', { title: 'Country' })
 
-			return $axios.$post('admin/company/get-all-company?all=true').then(({ res }) => {
+			return $axios.$post('v1/admin/company/get-all-company?all=true').then(({ res }) => {
 				return {
 					companies: res
 				}

@@ -61,7 +61,7 @@
 						form_data.append('name', me.form_data.name)
 						form_data.append('amount', me.form_data.amount)
 
-						me.$axios.post(`admin/currency-rate/update/${me.$route.params.slug}`, form_data).then(res => {
+						me.$axios.post(`v1/admin/currency-rate/update/${me.$route.params.slug}`, form_data).then(res => {
 							me.$store.dispatch('global/toast/addToast', { type: 'success', message: 'Item has been updated!' })
 							me.$nuxt.refresh()
 						}).catch(err => {
@@ -89,7 +89,7 @@
 		asyncData ({ $axios, store, params }) {
 			store.commit('global/settings/populateTitle', { title: 'Currency Rates' })
 
-			return $axios.$get(`admin/currency-rate/info/${params.slug}`).then(({ res }) => {
+			return $axios.$get(`v1/admin/currency-rate/info/${params.slug}`).then(({ res }) => {
 				return {
 					form_data: {
 						name: res.name,

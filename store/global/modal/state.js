@@ -4,7 +4,8 @@ export default () => ({
         wallet: false,
         confirmation: false,
         delete_confirmation: false,
-        catcher: false
+        catcher: false,
+        image_viewer: false,
     },
     item: {}
 })

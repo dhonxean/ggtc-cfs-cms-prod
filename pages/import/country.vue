@@ -50,14 +50,18 @@
 						let form_data = new FormData(document.getElementById('form'))
 						form_data.append('type', 'country')
 
-						me.$axios.post('admin/import/country', form_data).then(res => {
+						me.$axios.post('v1/admin/import/country', form_data).then(res => {
 							me.$store.dispatch('global/toast/addToast', { type: 'success', message: 'Data Imported Successfully!' })
 						}).catch(err => {
 							me.toggleModalStatus({ type: 'catcher', status: true, item: { errors: err.response.data.errors } })
 						}).then(() => {
-							me.toggleModalStatus({ type: 'loader', status: false })
+							// me.toggleModalStatus({ type: 'loader', status: false })
+							// setTimeout(() => {
+							// 	location.reload(true)
+							// }, 1000)
+							document.querySelector('.image_close').click()
 							setTimeout(() => {
-								location.reload(true)
+								me.toggleModalStatus({ type: 'loader', status: false })
 							}, 1000)
 						})
 					}
