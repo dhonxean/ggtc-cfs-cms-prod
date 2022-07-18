@@ -61,9 +61,9 @@ export default {
 					property: 'user'
 				},
 				endpoints: {
-					login: { url: `${process.env.API_URL}admin/login`, method: 'post' },
-					logout: { url: `${process.env.API_URL}admin/logout`, method: 'post' },
-					user: { url: `${process.env.API_URL}admin/info`, method: 'get' }
+					login: { url: `${process.env.API_URL}v1/admin/login`, method: 'post' },
+					logout: { url: `${process.env.API_URL}v1/admin/logout`, method: 'post' },
+					user: { url: `${process.env.API_URL}v1/admin/info`, method: 'get' }
 				}
 			}
 		}

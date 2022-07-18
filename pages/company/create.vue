@@ -54,7 +54,7 @@
 
 						form_data.append('name', me.form_data.name)
 
-						me.$axios.post('admin/company/create', form_data).then(res => {
+						me.$axios.post('v1/admin/company/create', form_data).then(res => {
 							me.$store.dispatch('global/toast/addToast', { type: 'success', message: 'Item has been added!' })
 							me.$router.push(`/company/${res.data.res.id}/update`)
 						}).catch(err => {
