@@ -2,9 +2,13 @@
 	<div id="dashboard" v-if="loaded">
 
 		<div class="actions">
-			<nuxt-link to="/translation/language" class="cancel button pointer">
+			<nuxt-link to="/banner" class="cancel button pointer">
 				<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
 				<span>Back</span>
+			</nuxt-link>
+			<nuxt-link to="/banner/create" class="success ml ten button pointer">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+				<span>Add Another</span>
 			</nuxt-link>
 		</div>
 
@@ -61,6 +65,8 @@
 								:image_label="'Web view'"
 								:input_name="'web_image'"
 								:category="'web_image'"
+								:parent="record.id"
+								:data="form_data.web_image"
 							/>
 						</div>
 						<div class="group nmb">
@@ -68,12 +74,12 @@
 								:image_label="'Mobile view'"
 								:input_name="'mobile_image'"
 								:category="'mobile_image'"
-								:data="[1]"
+								:parent="record.id"
+								:data="form_data.mobile_image"
 							/>
 						</div>
 					</div>
 				</div>
-
 				<div class="box mb">
 					<div class="top_box inline">
 						<h2>Has Download Button</h2>
@@ -98,19 +104,29 @@
 							<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 						</ValidationProvider>
 
+						<div class="mb" v-if="record.banner_file">
+							<div :class="[ (changed) ? 'cancel' : 'primary', 'button pointer' ]" @click="changed ^= true">{{ (changed) ? 'Cancel' : 'Change File' }}</div>
+						</div>
+
 						<div class="bottom_box">
+							<div class="group bordered filled" v-if="record.banner_file && !changed">
+								<div class="input">
+									<a :href="record.banner_file.file_path" target="_blank">{{ record.banner_file.file_path }}</a>
+								</div>
+							</div>
 							<asset-container
 								:extensions="['pdf', 'docx', 'doc', 'pptx', 'xlsx', 'jpeg', 'jpg', 'png']"
 								:division="'whole'"
 								:columns="''"
 								:multiple="false"
 								:type="'file'"
+								v-else
 							/>
 						</div>
 					</div>
 				</div>
 				<div class="buttons fixed">
-					<nuxt-link to="/" class="cancel button half_width btn lg">Cancel</nuxt-link>
+					<nuxt-link to="/banner" class="cancel button half_width btn lg">Cancel</nuxt-link>
 					<button type="submit" class="success button half_width btn lg pointer">Submit</button>
 				</div>
 			</form>
@@ -126,6 +142,8 @@
 		},
 		data: ({ $moment }) => ({
 			loaded: false,
+			record: [],
+			changed: false,
 			form_data: {
 				title: null,
 				type: '',
@@ -133,8 +151,10 @@
 				has_download_button: false,
 				download_label: null,
 				publish: false,
+				web_image: [],
+				mobile_image: [],
 			},
-		}),	
+		}),
 		methods: {
 			toggle (type) {
 				this.form_data[type] ^= true
@@ -149,16 +169,17 @@
 						return
 					} else {
 						me.toggleModalStatus({ type: 'loader', status: true })
-						let form_data = new FormData(document.getElementById('form'))
 
+						let form_data = new FormData(document.getElementById('form'))
 						form_data.append('published', me.form_data.publish ? 1 : 0)
 						form_data.append('has_download', me.form_data.has_download_button ? 1 : 0)
 
-						me.$axios.post('v1/admin/banner/create', form_data).then(res => {
-							me.$store.dispatch('global/toast/addToast', { type: 'success', message: 'Item has been added!' })
-							me.$router.push(`/banner/${res.data.res.id}/update`)
-						}).catch(err => {
-							me.toggleModalStatus({ type: 'catcher', status: true, item: { errors: err.response.data.errors } })
+						me.$axios.$post(`v1/admin/banner/update/${me.$route.params.slug}`, form_data).then(({ res }) => {
+							me.$store.dispatch('global/toast/addToast', { type: 'success', message: 'Item has been updated!' })
+							me.changed = false
+							me.$nuxt.refresh()
+						}).catch(({ response: { data: { errors } } }) => {
+							me.toggleModalStatus({ type: 'catcher', status: true, item: { errors: errors } })
 						}).then(() => {
 							setTimeout( () => {
 								me.toggleModalStatus({ type: 'loader', status: false })
@@ -179,8 +200,41 @@
 				me.loaded = true
 			}, 500)
 		},
-		asyncData ({ $axios, store, $auth }) {
+		asyncData ({ $axios, store, error, params }) {
 			store.commit('global/settings/populateTitle', { title: 'Banner' })
+
+			return $axios.$get(`v1/admin/banner/info/${params.slug}`).then(({ res }) => {
+				let banner = res,
+					web_image = [],
+					mobile_image = []
+				
+				banner.images.forEach((item, index) => {
+					switch (item.category) {
+						case 'web_image':
+							web_image.push(item)
+							break
+						case 'mobile_image':
+							mobile_image.push(item)
+							break
+					}
+				})
+
+				return {
+					record: res,
+					form_data: {
+						title: res.title,
+						type: res.type,
+						link: res.link,
+						has_download_button: res.has_download ? true : false,
+						download_label: res.download_label,
+						publish: res.published ? true : false,
+						web_image: web_image,
+						mobile_image: mobile_image,
+					}
+				}
+			}).catch(({ response: { data: { errors } } }) => {
+				error({ statusCode: 404, message: 'Page not found' })
+			})
 		}
 	}
 </script>
