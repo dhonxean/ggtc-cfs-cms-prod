@@ -2,7 +2,7 @@
 	<div id="dashboard" v-if="loaded">
 
 		<div class="actions">
-			<nuxt-link to="/translation/language" class="cancel button pointer">
+			<nuxt-link to="/banner" class="cancel button pointer">
 				<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
 				<span>Back</span>
 			</nuxt-link>
@@ -110,7 +110,7 @@
 					</div>
 				</div>
 				<div class="buttons fixed">
-					<nuxt-link to="/" class="cancel button half_width btn lg">Cancel</nuxt-link>
+					<nuxt-link to="/banner" class="cancel button half_width btn lg">Cancel</nuxt-link>
 					<button type="submit" class="success button half_width btn lg pointer">Submit</button>
 				</div>
 			</form>
