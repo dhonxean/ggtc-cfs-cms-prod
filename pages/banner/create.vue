@@ -2,7 +2,7 @@
 	<div id="dashboard" v-if="loaded">
 
 		<div class="actions">
-			<nuxt-link to="/translation/language" class="cancel button pointer">
+			<nuxt-link to="/banner" class="cancel button pointer">
 				<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
 				<span>Back</span>
 			</nuxt-link>
@@ -36,7 +36,7 @@
 							</ValidationProvider>
 							<ValidationProvider tag="div" class="group select bordered nmb" name="type" :rules="{ required: true }" v-slot="{ errors }">
 								<label for="type">Type *</label>
-								<select class="input" name="type" v-model="form_data.type">
+								<select class="input" name="type" v-model="form_data.type" @change="changeType()">
 									<option value="" disabled selected>Select a type</option>
 									<option value="bottom">Bottom</option>
 									<option value="top">Top</option>
@@ -51,7 +51,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="box mb">
+				<div class="box mb" v-if="show_images">
 					<div class="top_box">
 						<h2>Banner Image</h2>
 					</div>
@@ -61,6 +61,7 @@
 								:image_label="'Web view'"
 								:input_name="'web_image'"
 								:category="'web_image'"
+								:dimension="{imageWidth: dimension.web.width ,imageHeight: dimension.web.length}"
 							/>
 						</div>
 						<div class="group nmb">
@@ -69,6 +70,7 @@
 								:input_name="'mobile_image'"
 								:category="'mobile_image'"
 								:data="[1]"
+								:dimension="{imageWidth: dimension.mobile.width ,imageHeight: dimension.mobile.length}"
 							/>
 						</div>
 					</div>
@@ -134,7 +136,18 @@
 				download_label: null,
 				publish: false,
 			},
-		}),	
+			show_images: false,
+			dimension: {
+				web: {
+					width: null,
+					length: null,
+				},
+				mobile: {
+					width: null,
+					length: null,
+				}
+			}
+		}),
 		methods: {
 			toggle (type) {
 				this.form_data[type] ^= true
@@ -142,7 +155,7 @@
 			submit () {
 				const me = this
 				me.$refs.form.validate().then(success => {
-					if (!success) {
+					if (!success || document.querySelectorAll('.validate').length > 0) {
 						me.$scrollTo('.validate', {
 							offset: -250
 						})
@@ -169,6 +182,38 @@
 						me.$refs.form.reset()
 					})
 				})
+			},
+			changeType() {
+				const me = this
+				me.show_images = false
+				switch (me.form_data.type) {
+					case 'top':
+						me.dimension.web = {
+							width: 1174,
+							length: 200
+						}
+						me.dimension.mobile = {
+							width: 333,
+							length: 250
+						}
+						setTimeout(() => {
+							me.show_images = true
+						}, 500)
+						break
+					case 'bottom':
+						me.dimension.web = {
+							width: 1280,
+							length: 300
+						}
+						me.dimension.mobile = {
+							width: 375,
+							length: 250
+						}
+						setTimeout(() => {
+							me.show_images = true
+						}, 500)
+						break
+				}
 			}
 		},
 		mounted () {
