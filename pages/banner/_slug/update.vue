@@ -40,7 +40,7 @@
 							</ValidationProvider>
 							<ValidationProvider tag="div" class="group select bordered nmb" name="type" :rules="{ required: true }" v-slot="{ errors }">
 								<label for="type">Type *</label>
-								<select class="input" name="type" v-model="form_data.type">
+								<select class="input" name="type" v-model="form_data.type" @change="changeType()">
 									<option value="" disabled selected>Select a type</option>
 									<option value="bottom">Bottom</option>
 									<option value="top">Top</option>
@@ -55,7 +55,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="box mb">
+				<div class="box mb" v-if="show_images">
 					<div class="top_box">
 						<h2>Banner Image</h2>
 					</div>
@@ -67,6 +67,7 @@
 								:category="'web_image'"
 								:parent="record.id"
 								:data="form_data.web_image"
+								:dimension="{imageWidth: dimension.web.width ,imageHeight: dimension.web.length}"
 							/>
 						</div>
 						<div class="group nmb">
@@ -76,6 +77,7 @@
 								:category="'mobile_image'"
 								:parent="record.id"
 								:data="form_data.mobile_image"
+								:dimension="{imageWidth: dimension.mobile.width ,imageHeight: dimension.mobile.length}"
 							/>
 						</div>
 					</div>
@@ -154,6 +156,17 @@
 				web_image: [],
 				mobile_image: [],
 			},
+			dimension: {
+				web: {
+					width: null,
+					length: null,
+				},
+				mobile: {
+					width: null,
+					length: null,
+				}
+			},
+			show_images: false
 		}),
 		methods: {
 			toggle (type) {
@@ -162,7 +175,7 @@
 			submit () {
 				const me = this
 				me.$refs.form.validate().then(success => {
-					if (!success) {
+					if (!success || document.querySelectorAll('.validate').length > 0) {
 						me.$scrollTo('.validate', {
 							offset: -250
 						})
@@ -190,10 +203,43 @@
 						me.$refs.form.reset()
 					})
 				})
+			},
+			changeType() {
+				const me = this
+				me.show_images = false
+				switch (me.form_data.type) {
+					case 'top':
+						me.dimension.web = {
+							width: 1174,
+							length: 200
+						}
+						me.dimension.mobile = {
+							width: 333,
+							length: 250
+						}
+						setTimeout(() => {
+							me.show_images = true
+						}, 500)
+						break
+					case 'bottom':
+						me.dimension.web = {
+							width: 1280,
+							length: 300
+						}
+						me.dimension.mobile = {
+							width: 375,
+							length: 250
+						}
+						setTimeout(() => {
+							me.show_images = true
+						}, 500)
+						break
+				}
 			}
 		},
 		mounted () {
 			const me = this
+			me.changeType()
 			me.toggleModalStatus({ type: 'loader', status: true })
 			setTimeout( () => {
 				me.toggleModalStatus({ type: 'loader', status: false })
