@@ -105,7 +105,7 @@
 						<h2>Threat to Environmental harms</h2>
 					</div>
 					<div class="bottom_box">
-						<div class="group_inline three">
+						<div class="group_inline two">
 							<ValidationProvider tag="div" class="group bordered" name="Death" :rules="{ required: true }" v-slot="{ errors }">
 								<label for="death">Death *</label>
 								<input type="number" class="input" name="death" autocomplete="off" placeholder="Enter death" v-model="form_data.death">
@@ -116,25 +116,25 @@
 								<input type="decimal" class="input" name="economic_cost" autocomplete="off" placeholder="Enter Economic Losses" v-model="form_data.economic_cost">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
+						</div>
+						<div class="group_inline two">
 							<div class="group bordered">
 								<label for="economic_cost_currency">Economic Losses Currency</label>
 								<input type="text" class="input" name="economic_cost_currency" autocomplete="off" placeholder="Enter Economic Losses Currency" v-model="form_data.economic_cost_currency">
 							</div>
-						</div>
-						<div class="group_inline three">
 							<ValidationProvider tag="div" class="group bordered" name="Cigarettes Consumed" :rules="{ required: true }" v-slot="{ errors }">
 								<label for="cigarettes_consumed">Cigarettes Consumed *</label>
 								<input type="number" class="input" name="cigarettes_consumed" autocomplete="off" placeholder="Enter Cigarettes Consumed" v-model="form_data.cigarettes_consumed">
 								<transition name="slide"><span class="validate" v-if="errors.length > 0">{{ errors[0] }}</span></transition>
 							</ValidationProvider>
-							<div class="group bordered" name="Cigarettes Consumed Unit">
+							<!-- <div class="group bordered" name="Cigarettes Consumed Unit">
 								<label for="cigarettes_consumed_unit">Cigarettes Consumed Unit</label>
 								<input type="text" class="input" name="cigarettes_consumed_unit" autocomplete="off" placeholder="Enter Cigarettes Consumed Unit" v-model="form_data.cigarettes_consumed_unit">
 							</div>
 							<div class="group bordered" >
 								<label for="cigarettes_sticks">Cigarettes Sticks</label>
 								<input type="number" class="input" name="cigarettes_sticks" autocomplete="off" placeholder="Enter Cigarettes Sticks" v-model="form_data.cigarettes_sticks">
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
@@ -181,7 +181,7 @@
 						<p class="description">Maximum of two decimals only</p>
 					</div>
 					<div class="bottom_box">
-						<div class="group_inline two">
+						<!-- <div class="group_inline two">
 							<div class="group bordered">
 								<label for="marine_cost_per_ton">Marine Cost per ton</label>
 								<input @keyup="convertSelectedCurrency('local_marine_cost_per_ton', selected_rates, 'marine_cost_per_ton')" pattern="/^\d+(?:\.\d{0,2})?/" type="number" step="0.0000000001" class="input" name="marine_cost_per_ton" autocomplete="off" placeholder="Enter Marine Cost per ton" v-model="form_data.marine_cost_per_ton">
@@ -200,7 +200,7 @@
 								<label for="waste_cost_per_ton">Waste Cost per ton in {{ form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency' }}</label>
 								<input @keyup="convertSelectedCurrency('waste_cost_per_ton', selected_rates, 'local_waste_cost_per_ton', 'usd')" type="number" step="0.0000000001" class="input" name="waste_cost_per_ton" autocomplete="off" :placeholder="`Enter Waste Cost per ton in ${form_data.currency != null && form_data.currency != '' ? form_data.currency.name : 'Country Currency'}`" v-model="form_data.local_waste_cost_per_ton">
 							</div>
-						</div>
+						</div> -->
 						<div class="group_inline two">
 							<ValidationProvider tag="div" class="group bordered" name="Marine Pollution Cost" :rules="{ required: true }" v-slot="{ errors }">
 								<label for="marine_pollution">Marine Pollution Cost *</label>
