@@ -13,14 +13,14 @@
                 class="column solid"
               >
                 <div class="count">{{ record.facebook }}</div>
-                <div class="title">Facebook Share Click</div>
+                <div class="title">Facebook Share Clicks</div>
               </nuxt-link>
               <nuxt-link
                 :to="`/tracking/twitter`"
                 class="column solid"
               >
                 <div class="count">{{ record.twitter }}</div>
-                <div class="title">Twitter Share Click</div>
+                <div class="title">Twitter Share Clicks</div>
               </nuxt-link>
             </div>
             <div class="wrapper two" v-if="record">
