@@ -2,7 +2,7 @@
 	<div id="dashboard" v-if="loaded">
 
 		<div class="actions">
-			<nuxt-link to="/vote" class="cancel button pointer">
+			<nuxt-link to="/tracking" class="cancel button pointer">
 				<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
 				<span>Back</span>
 			</nuxt-link>
@@ -68,7 +68,7 @@
 			}, 500)
 		},
 		asyncData ({ $axios, store, params }) {
-			store.commit('global/settings/populateTitle', { title: 'Votes' })
+			store.commit('global/settings/populateTitle', { title: 'Tracking' })
 			return $axios.$get(`v1/admin/consent/list?type=${params.type}`).then(({ res }) => {
 				return {
 					records: res

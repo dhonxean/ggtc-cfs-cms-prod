@@ -3,24 +3,40 @@
     <div class="box_parent full nmb">
       <div class="box nmb">
         <div class="top_box">
-          <h2>Vote Counts</h2>
+          <h2>Tracking Counts</h2>
         </div>
         <div class="bottom_box npb">
           <div class="columns">
             <div class="wrapper two" v-if="record">
               <nuxt-link
-                :to="`/vote/click`"
+                :to="`/tracking/facebook`"
+                class="column solid"
+              >
+                <div class="count">{{ record.facebook }}</div>
+                <div class="title">Facebook Share Click</div>
+              </nuxt-link>
+              <nuxt-link
+                :to="`/tracking/twitter`"
+                class="column solid"
+              >
+                <div class="count">{{ record.twitter }}</div>
+                <div class="title">Twitter Share Click</div>
+              </nuxt-link>
+            </div>
+            <div class="wrapper two" v-if="record">
+              <nuxt-link
+                :to="`/tracking/click`"
                 class="column solid"
               >
                 <div class="count">{{ record.clicks }}</div>
-                <div class="title">Clicks</div>
+                <div class="title">Consent Clicks</div>
               </nuxt-link>
               <nuxt-link
-                :to="`/vote/redirect`"
+                :to="`/tracking/redirect`"
                 class="column solid"
               >
                 <div class="count">{{ record.redirects }}</div>
-                <div class="title">Redirects</div>
+                <div class="title">Consent Redirects</div>
               </nuxt-link>
             </div>
           </div>
@@ -43,7 +59,7 @@ export default {
     }, 500)
   },
   asyncData ({ $axios, store, query }) {
-    store.commit('global/settings/populateTitle', { title: 'Vote' })
+    store.commit('global/settings/populateTitle', { title: 'Tracking' })
 
     return $axios.$get(`v1/admin/consent/stats`)
       .then(({ res }) => {
