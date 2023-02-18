@@ -11,11 +11,18 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<!-- <th class="stick">
-						<div class="label">
-							Campaign Name
-						</div>
-					</th> -->
+					<template v-if="$route.params.type == 'sign-up'">
+						<th class="stick">
+							<div class="label">
+								Name
+							</div>
+						</th>
+						<th class="stick">
+							<div class="label">
+								Email Address
+							</div>
+						</th>
+					</template>
 					<th class="stick">
 						<div class="label">
 							Country
@@ -30,7 +37,10 @@
 			</thead>
 			<tbody v-if="records.data.length > 0">
 				<tr v-for="(data, key) in records.data" :key="key">
-					<!-- <td>{{ data.campaign_name}}</td> -->
+					<template v-if="$route.params.type == 'sign-up'">
+						<td>{{ data.name}}</td>
+						<td>{{ data.email}}</td>
+					</template>
 					<td>{{ data.country ? data.country.name : 'N/A'}}</td>
 					<td>{{ $moment(data.created_at).format('MMM DD YYYY') }}</td>
 				</tr>
@@ -69,7 +79,7 @@
 		},
 		asyncData ({ $axios, store, params }) {
 			store.commit('global/settings/populateTitle', { title: 'Tracking' })
-			return $axios.$get(`v1/admin/consent/list?type=${params.type}`).then(({ res }) => {
+			return $axios.$get(`v1/admin/tracking/list?type=${params.type}`).then(({ res }) => {
 				return {
 					records: res
 				}

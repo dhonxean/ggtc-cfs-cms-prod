@@ -7,7 +7,7 @@
         </div>
         <div class="bottom_box npb">
           <div class="columns">
-            <div class="wrapper two" v-if="record">
+            <div class="wrapper three" v-if="record">
               <nuxt-link
                 :to="`/tracking/facebook`"
                 class="column solid"
@@ -22,21 +22,12 @@
                 <div class="count">{{ record.twitter }}</div>
                 <div class="title">Twitter Share Clicks</div>
               </nuxt-link>
-            </div>
-            <div class="wrapper two" v-if="record">
               <nuxt-link
-                :to="`/tracking/click`"
+                :to="`/tracking/sign-up`"
                 class="column solid"
               >
-                <div class="count">{{ record.clicks }}</div>
-                <div class="title">Consent Clicks</div>
-              </nuxt-link>
-              <nuxt-link
-                :to="`/tracking/redirect`"
-                class="column solid"
-              >
-                <div class="count">{{ record.redirects }}</div>
-                <div class="title">Consent Redirects</div>
+                <div class="count">{{ record.sign_ups }}</div>
+                <div class="title">Total Sign ups</div>
               </nuxt-link>
             </div>
           </div>
@@ -61,7 +52,7 @@ export default {
   asyncData ({ $axios, store, query }) {
     store.commit('global/settings/populateTitle', { title: 'Tracking' })
 
-    return $axios.$get(`v1/admin/consent/stats`)
+    return $axios.$get(`v1/admin/tracking/stats`)
       .then(({ res }) => {
         return {
           record: res,
