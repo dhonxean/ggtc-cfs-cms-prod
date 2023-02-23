@@ -189,8 +189,8 @@
 				switch (me.form_data.type) {
 					case 'top':
 						me.dimension.web = {
-							width: 1174,
-							length: 200
+							width: 1180,
+							length: 250
 						}
 						me.dimension.mobile = {
 							width: 333,
