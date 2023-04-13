@@ -6,6 +6,43 @@ Vue.mixin({
 		...mapMutations({
 			toggleModalStatus: 'global/modal/toggleModalStatus'
 		}),
+		getExportables (api_route, form_data = null, type = 'get', className = 'me') {
+      let query = new URLSearchParams()
+      if (form_data) {
+        for (const key in form_data) {
+          query.append(key, form_data[key])
+        }
+      }
+      query.append('all', 1)
+
+      this.toggleModalStatus({ type: 'loader', status: true })
+			switch (type) {
+				case 'post':
+					this.$axios.$post(`${api_route}?${query.toString()}`).then(({ res }) => {
+						this.exportables = res
+					}).catch(err => {
+						this.$store.commit('global/catcher/populateErrors', { items: err.response.data.errors })
+					}).then(() => {
+						setTimeout( () => {
+							this.toggleModalStatus({ type: 'loader', status: false })
+							document.querySelector(`.${className}`).click()
+						}, 500)
+					})
+					break
+				default:
+					this.$axios.$get(`${api_route}?${query.toString()}`).then(({ res }) => {
+						this.exportables = res
+					}).catch(err => {
+						this.$store.commit('global/catcher/populateErrors', { items: err.response.data.errors })
+					}).then(() => {
+						setTimeout( () => {
+							this.toggleModalStatus({ type: 'loader', status: false })
+							document.querySelector(`.${className}`).click()
+						}, 500)
+					})
+					break
+			}
+    },
 		async validateToken (...routes) {
 			let authenticated = await (this.$auth.user) ? true : false
 

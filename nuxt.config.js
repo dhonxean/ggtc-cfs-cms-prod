@@ -31,6 +31,7 @@ export default {
 		{ src: '~/plugins/vue-multiselect', ssr: false },
 		{ src: '~/plugins/vue-ctk-date-time-picker', ssr: false },
 		{ src: '~/plugins/vue-line-clamp', ssr: false },
+		{ src: '~/plugins/vue-json-csv', ssr: false },
 		{ src: '~/plugins/vee-validate' },
 		{ src: '~/plugins/vue-moment' },
 		{ src: '~/plugins/vue-click-outside', ssr: false },
